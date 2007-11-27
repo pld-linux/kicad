@@ -34,6 +34,9 @@ programów:
 
 %prep
 %setup -q -n %{name}
+%if "%{_lib}" == "lib64"
+	%{__sed} -i -e "s@/lib/@/lib64/@g" libs.linux
+%endif
 
 %build
 export WX_CONFIG="`which wx-gtk2-unicode-config`"
