@@ -10,7 +10,7 @@ Source0:	http://dl.sourceforge.net/kicad/%{name}-%{version}-%{_release}.tar.bz2
 # Source0-md5:	8ef6310123e9361c5780d321ec07cc8b
 URL:		http://kicad.sourceforge.net/
 BuildRequires:	wxGTK2-unicode-devel
-BuildRequires:	wxGTK2-gl-devel
+BuildRequires:	wxGTK2-unicode-gl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
