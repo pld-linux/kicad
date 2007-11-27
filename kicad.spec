@@ -3,12 +3,14 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad jest zestawem programów na licencji GPL zaliczanym do kategorii EDA
 Name:		kicad
 Version:	20071004
-Release:	0.5
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/kicad/%{name}-%{version}-%{_release}.tar.bz2
 # Source0-md5:	8ef6310123e9361c5780d321ec07cc8b
 URL:		http://kicad.sourceforge.net/
+BuildRequires:	wxGTK2-unicode-devel
+BuildRequires:	wxGTK2-gl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -34,7 +36,16 @@ programów:
 %setup -q -n %{name}
 
 %build
-%{__make} -f makefile.gtk
+export WX_CONFIG="`which wx-gtk2-unicode-config`"
+%{__make} -f makefile.gtk \
+	WXXFLAGS="`$WX_CONFIG --cxxflags`" \
+	WXPATH=%{_libdir} \
+	PREFIX_WX_LIBS="lib`$WX_CONFIG --basename`" \
+	SUFFIX_WX_LIBSTD="`$WX_CONFIG --utility=`" \
+	SUFFIX_WX_LIBGL="_gl-`$WX_CONFIG --release`" \
+	LIBVERSION="`$WX_CONFIG --release`" \
+	WXSYSLIB="`$WX_CONFIG --libs std`" \
+	WXSYSLIB_WITH_GL="`$WX_CONFIG --libs std,gl`"
 
 %install
 rm -rf $RPM_BUILD_ROOT
