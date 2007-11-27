@@ -34,8 +34,8 @@ programów:
 
 %prep
 %setup -q -n %{name}
-%if "%{_lib}" == "lib64"
-	%{__sed} -i -e "s@/lib/@/lib64/@g" libs.linux
+%if "%{_lib}" != "lib"
+	%{__sed} -i -e "s@/lib/@/%{_lib}/@g" libs.linux
 %endif
 
 %build
@@ -43,11 +43,7 @@ export WX_CONFIG="`which wx-gtk2-unicode-config`"
 %{__make} -f makefile.gtk \
 	WXXFLAGS="`$WX_CONFIG --cxxflags`" \
 	WXPATH=%{_libdir} \
-%if "%{_lib}" == "lib64"
-	PREFIX_WX_LIBS="lib64`$WX_CONFIG --basename`" \
-%else
 	PREFIX_WX_LIBS="lib`$WX_CONFIG --basename`" \
-%endif
 	SUFFIX_WX_LIBSTD="`$WX_CONFIG --utility=`" \
 	SUFFIX_WX_LIBGL="_gl-`$WX_CONFIG --release`" \
 	LIBVERSION="`$WX_CONFIG --release`" \
