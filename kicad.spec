@@ -1,14 +1,15 @@
 %define		_release	r304
 Summary:	KiCad - is a GPL'd suite of programs for EDA
-Summary(pl.UTF-8):	KiCad jest zestawem programów na licencji GPL zaliczanym do kategorii EDA
+Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	20071004
 Release:	1
 License:	GPL
-Group:		Applications
+Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/kicad/%{name}-%{version}-%{_release}.tar.bz2
 # Source0-md5:	8ef6310123e9361c5780d321ec07cc8b
 URL:		http://kicad.sourceforge.net/
+BuildRequires:	sed >= 4.0
 BuildRequires:	wxGTK2-unicode-devel
 BuildRequires:	wxGTK2-unicode-gl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -27,10 +28,10 @@ KiCad składa się z menadżera projektów oraz czterych głównych
 programów:
 - kicad - menadżer projektów.
 - eeschema - edytor schematów.
-- cvpcb - the footprint selector for components used in the circuit
-  design.
-- pcbnew - the PCB layout program.
-- gerbview - the Gerber (photoplotter documents) viewer.
+- cvpcb - narzędzie do wybierania elementów używanych przy
+  projektowaniu płytek drukowanych.
+- pcbnew - program do projektowania płytek drukowanych.
+- gerbview - przeglądarka plików Gerber (dokumentów dla fotoplotera).
 
 %prep
 %setup -q -n %{name}
