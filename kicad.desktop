@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=kicad
+Comment=Generates schematic diagrams and PCB artwork
+Exec=kicad
+Icon=kicad
+Type=Application
+Terminal=0
+Categories=Education;Science;Electronics
