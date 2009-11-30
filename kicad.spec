@@ -15,9 +15,12 @@ Source2:	http://dl.sourceforge.net/kicad/%{name}-doc-%{docver}.tar.bz2
 # Source2-md5:	fcfbc94f675a19db51370e97b88803b1
 Source3:	%{name}.desktop
 URL:		http://kicad.sourceforge.net/
+BuildRequires:	boost-devel
 BuildRequires:	sed >= 4.0
+BuildRequires:	which
 BuildRequires:	wxGTK2-unicode-devel
 BuildRequires:	wxGTK2-unicode-gl-devel
+BuildRequires:	wxWidgets-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,6 +57,12 @@ export WX_CONFIG="`which wx-gtk2-unicode-config`"
 %build
 export WX_CONFIG="`which wx-gtk2-unicode-config`"
 %{__make} -f makefile.gtk \
+	CC="%{__cc}" \
+	CXX="%{__cxx}" \
+	LD="%{__cxx}" \
+	CLAGS="%{rpmcflags}" \
+	CXXLAGS="%{rpmcxxflags}" \
+	LDFLAGS="%{rpmldflags} %{rpmcxxflags}" \
 	WXXFLAGS="`$WX_CONFIG --cxxflags`" \
 	WXPATH=%{_libdir} \
 	PREFIX_WX_LIBS="lib`$WX_CONFIG --basename`" \
@@ -83,7 +92,7 @@ done
 
 for loc in $RPM_BUILD_ROOT%{_datadir}/%{name}/help/*; do
 	if [ -d $loc/docs_src ]; then
-		rm -rf $loc/docs_src; 
+		rm -rf $loc/docs_src;
 	fi
 done
 
