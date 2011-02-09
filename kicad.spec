@@ -4,7 +4,7 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	20080825
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/kicad/%{name}-%{version}.tar.bz2
@@ -83,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix}
 install -d $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
 for loc in $RPM_BUILD_ROOT%{_localedir}/*; do
 	install -d $loc/LC_MESSAGES
@@ -91,9 +91,7 @@ for loc in $RPM_BUILD_ROOT%{_localedir}/*; do
 done
 
 for loc in $RPM_BUILD_ROOT%{_datadir}/%{name}/help/*; do
-	if [ -d $loc/docs_src ]; then
-		rm -rf $loc/docs_src;
-	fi
+	rm -rf $loc/docs_src
 done
 
 %find_lang %{name}
@@ -104,9 +102,11 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc change_log.txt regex_doc.txt todo.txt version.txt
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/cvpcb
+%attr(755,root,root) %{_bindir}/eeschema
+%attr(755,root,root) %{_bindir}/gerbview
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
-%attr(755,root,root) %{_libdir}/%{name}/plugins/*
+%attr(755,root,root) %{_libdir}/%{name}/plugins/netlist_form_pads-pcb
 %{_datadir}/%{name}
 %{_desktopdir}/%{name}.desktop
