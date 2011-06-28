@@ -91,7 +91,7 @@ rm -rf $RPM_BUILD_ROOT
 #%%files -f %{name}.lang
 %files
 %defattr(644,root,root,755)
-%doc change_log.txt regex_doc.txt todo.txt version.txt
+%doc AUTHORS.txt CHANGELOG.txt Documentation
 %attr(755,root,root) %{_bindir}/cvpcb
 %attr(755,root,root) %{_bindir}/eeschema
 %attr(755,root,root) %{_bindir}/gerbview
