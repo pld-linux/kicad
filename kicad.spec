@@ -74,10 +74,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_desktopdir}
 cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
-for loc in $RPM_BUILD_ROOT%{_localedir}/*; do
-	install -d $loc/LC_MESSAGES
-	mv $loc/*.mo $loc/LC_MESSAGES
-done
+#for loc in $RPM_BUILD_ROOT%{_localedir}/*; do
+#	install -d $loc/LC_MESSAGES
+#	mv $loc/*.mo $loc/LC_MESSAGES
+#done
 
 for loc in $RPM_BUILD_ROOT%{_datadir}/%{name}/help/*; do
 	rm -rf $loc/docs_src
