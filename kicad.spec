@@ -4,18 +4,20 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	20110429
-Release:	2
-License:	GPL
+Release:	0.1
+License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://iut-tice.ujf-grenoble.fr/cao/%{name}-sources_2011-04-29-BZR2986.zip
 # Source0-md5:	e5d5311ad8a6387b1e96a9ee63088238
-Source1:	http://dl.sourceforge.net/kicad/%{name}-library-%{libver}.tar.bz2
+Source1:	http://downloads.sourceforge.net/kicad/%{name}-library-%{libver}.tar.bz2
 # Source1-md5:	9c91940aa5f5563bb86c52ff07e8f99a
-Source2:	http://dl.sourceforge.net/kicad/%{name}-doc-%{docver}.tar.bz2
+Source2:	http://downloads.sourceforge.net/kicad/%{name}-doc-%{docver}.tar.bz2
 # Source2-md5:	fcfbc94f675a19db51370e97b88803b1
 Source3:	%{name}.desktop
 URL:		http://kicad.sourceforge.net/
 BuildRequires:	boost-devel
+BuildRequires:	cmake
+BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
 BuildRequires:	wxGTK2-unicode-devel
@@ -33,7 +35,7 @@ KiCad consists of a project manager and four main programs:
 - gerbview - the Gerber (photoplotter documents) viewer.
 
 %description -l pl.UTF-8
-KiCad składa się z menadżera projektów oraz czterych głównych
+KiCad składa się z menadżera projektów oraz czterech głównych
 programów:
 - kicad - menadżer projektów.
 - eeschema - edytor schematów.
@@ -57,17 +59,13 @@ programów:
 %build
 install -d build
 cd build
-%{__cmake} \
+%cmake \
 	-DKICAD_STABLE_VERSION=ON \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DwxWidgets_ROOT_DIR=/usr \
+	-DwxWidgets_ROOT_DIR=%{_prefix} \
 	-DwxWidgets_USE_STATIC=OFF \
-	-DwxWidgets_CONFIG_EXECUTABLE=/usr/bin/wx-gtk2-unicode-config \
+	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk2-unicode-config \
 	-DKICAD_MINIZIP=ON \
 	-DKICAD_GOST=ON \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	--debug-output \
 	..
 
 %{__make}
@@ -75,13 +73,14 @@ cd build
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} -f makefile.gtk install \
+%{__make} -C build install \
 	KICAD_INTERNAT=$RPM_BUILD_ROOT%{_localedir} \
 	KICAD_PLUGINS=$RPM_BUILD_ROOT%{_libdir}/%{name}/plugins \
 	KICAD_DATA=$RPM_BUILD_ROOT%{_datadir}/%{name} \
 	KICAD_DOCS=$RPM_BUILD_ROOT%{_datadir}/%{name}/help \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix}
+
 install -d $RPM_BUILD_ROOT%{_desktopdir}
 cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
