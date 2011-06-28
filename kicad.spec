@@ -43,10 +43,10 @@ programów:
 - gerbview - przeglądarka plików Gerber (dokumentów dla fotoplotera).
 
 %prep
-%setup -q -a1 -a2 -n %{name}_sources
-mv kicad/doc/help .
-mv kicad-library/library .
-mv kicad-library/modules .
+%setup -q  -n %{name}_sources
+#mv kicad/* .
+#mv kicad-library/library .
+#mv kicad-library/modules .
 
 #%if "%{_lib}" != "lib"
 #	%{__sed} -i -e "s@/lib/@/%{_lib}/@g" libs.linux
@@ -63,12 +63,14 @@ cd build
 	-DCMAKE_INSTALL_PREFIX=/usr \
 	-DwxWidgets_ROOT_DIR=/usr \
 	-DwxWidgets_USE_STATIC=OFF \
+	-DwxWidgets_CONFIG_EXECUTABLE=/usr/bin/wx-gtk2-unicode-config \
 	-DKICAD_MINIZIP=ON \
 	-DKICAD_GOST=ON \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	--debug-output \
 	..
 
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
