@@ -97,6 +97,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gerbview
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
-%attr(755,root,root) %{_libdir}/%{name}/plugins/netlist_form_pads-pcb
+#%%attr(755,root,root) %{_libdir}/%{name}/plugins/netlist_form_pads-pcb
 %{_datadir}/%{name}
 %{_desktopdir}/%{name}.desktop
