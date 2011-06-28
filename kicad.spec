@@ -3,12 +3,12 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	20080825
+Version:	20110429
 Release:	2
 License:	GPL
 Group:		X11/Applications
-Source0:	http://dl.sourceforge.net/kicad/%{name}-%{version}.tar.bz2
-# Source0-md5:	fa3d3e0d7e2793073581cf46f23cca8d
+Source0:	http://iut-tice.ujf-grenoble.fr/cao/%{name}-sources_2011-04-29-BZR2986.zip
+# Source0-md5:	e5d5311ad8a6387b1e96a9ee63088238
 Source1:	http://dl.sourceforge.net/kicad/%{name}-library-%{libver}.tar.bz2
 # Source1-md5:	9c91940aa5f5563bb86c52ff07e8f99a
 Source2:	http://dl.sourceforge.net/kicad/%{name}-doc-%{docver}.tar.bz2
@@ -43,34 +43,32 @@ programów:
 - gerbview - przeglądarka plików Gerber (dokumentów dla fotoplotera).
 
 %prep
-%setup -q -a1 -a2 -n %{name}
+%setup -q -a1 -a2 -n %{name}_sources
 mv kicad/doc/help .
 mv kicad-library/library .
 mv kicad-library/modules .
 
-%if "%{_lib}" != "lib"
-	%{__sed} -i -e "s@/lib/@/%{_lib}/@g" libs.linux
-%endif
-export WX_CONFIG="`which wx-gtk2-unicode-config`"
-%{__sed} -i -e "s@wx-config@$WX_CONFIG@g" libs.linux
+#%if "%{_lib}" != "lib"
+#	%{__sed} -i -e "s@/lib/@/%{_lib}/@g" libs.linux
+#%endif
+#export WX_CONFIG="`which wx-gtk2-unicode-config`"
+#%{__sed} -i -e "s@wx-config@$WX_CONFIG@g" libs.linux
 
 %build
-export WX_CONFIG="`which wx-gtk2-unicode-config`"
-%{__make} -f makefile.gtk \
-	CC="%{__cc}" \
-	CXX="%{__cxx}" \
-	LD="%{__cxx}" \
-	CLAGS="%{rpmcflags}" \
-	CXXLAGS="%{rpmcxxflags}" \
-	LDFLAGS="%{rpmldflags} %{rpmcxxflags}" \
-	WXXFLAGS="`$WX_CONFIG --cxxflags`" \
-	WXPATH=%{_libdir} \
-	PREFIX_WX_LIBS="lib`$WX_CONFIG --basename`" \
-	SUFFIX_WX_LIBSTD="`$WX_CONFIG --utility=`" \
-	SUFFIX_WX_LIBGL="_gl-`$WX_CONFIG --release`" \
-	LIBVERSION="`$WX_CONFIG --release`" \
-	WXSYSLIB="`$WX_CONFIG --libs std`" \
-	WXSYSLIB_WITH_GL="`$WX_CONFIG --libs std,gl`"
+install -d build
+cd build
+%{__cmake} \
+	-DKICAD_STABLE_VERSION=ON \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DwxWidgets_ROOT_DIR=/usr \
+	-DwxWidgets_USE_STATIC=OFF \
+	-DKICAD_MINIZIP=ON \
+	-DKICAD_GOST=ON \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
+	--debug-output \
+	..
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
