@@ -45,24 +45,14 @@ programów:
 
 %prep
 %setup -q  -n %{name}_sources
-#mv kicad/* .
-#mv kicad-library/library .
-#mv kicad-library/modules .
-
-#%if "%{_lib}" != "lib"
-#	%{__sed} -i -e "s@/lib/@/%{_lib}/@g" libs.linux
-#%endif
-#export WX_CONFIG="`which wx-gtk2-unicode-config`"
-#%{__sed} -i -e "s@wx-config@$WX_CONFIG@g" libs.linux
 
 %build
 install -d build
 cd build
 %cmake \
 	-DKICAD_STABLE_VERSION=ON \
-	-DwxWidgets_ROOT_DIR=%{_prefix} \
 	-DwxWidgets_USE_STATIC=OFF \
-	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk2-unicode-config \
+	-DwxWidgets_CONFIG_EXECUTABLE="%{_bindir}/wx-gtk2-unicode-config" \
 	-DKICAD_MINIZIP=ON \
 	-DKICAD_GOST=ON \
 	..
