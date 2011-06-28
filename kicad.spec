@@ -20,7 +20,6 @@ BuildRequires:	cmake
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
-BuildRequires:	wxGTK2-unicode-devel
 BuildRequires:	wxGTK2-unicode-gl-devel
 BuildRequires:	wxWidgets-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
