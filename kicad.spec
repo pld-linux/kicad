@@ -47,6 +47,10 @@ programów:
 %prep
 %setup -q  -n %{name}_sources
 
+%if "%{_lib}" != "lib"
+	%{__sed} -i -e "s@/lib/@/%{_lib}/@g" CMakeLists.txt
+%endif
+
 %build
 install -d build
 cd build
