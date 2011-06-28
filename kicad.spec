@@ -16,12 +16,13 @@ Source2:	http://downloads.sourceforge.net/kicad/%{name}-doc-%{docver}.tar.bz2
 Source3:	%{name}.desktop
 URL:		http://kicad.sourceforge.net/
 BuildRequires:	boost-devel
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.6.4
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
-BuildRequires:	wxGTK2-unicode-gl-devel
-BuildRequires:	wxWidgets-devel
+BuildRequires:	wxGTK2-unicode-gl-devel >= 2.8.11
+BuildRequires:	wxWidgets-devel >= 2.8.11
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
