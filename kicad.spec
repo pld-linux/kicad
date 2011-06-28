@@ -83,12 +83,13 @@ for loc in $RPM_BUILD_ROOT%{_datadir}/%{name}/help/*; do
 	rm -rf $loc/docs_src
 done
 
-%find_lang %{name}
+#%%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.lang
+#%%files -f %{name}.lang
+%files
 %defattr(644,root,root,755)
 %doc change_log.txt regex_doc.txt todo.txt version.txt
 %attr(755,root,root) %{_bindir}/cvpcb
