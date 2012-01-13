@@ -3,12 +3,12 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	20110429
-Release:	0.1
+Version:	20111228
+Release:	0.2
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://iut-tice.ujf-grenoble.fr/cao/%{name}-sources_2011-04-29-BZR2986.zip
-# Source0-md5:	e5d5311ad8a6387b1e96a9ee63088238
+Source0:	http://iut-tice.ujf-grenoble.fr/cao/%{name}_sources-2011-12-28-BZR3254-stable.zip
+# Source0-md5:	ac274cc60651e53d158773d4b0ae0788
 Source1:	http://downloads.sourceforge.net/kicad/%{name}-library-%{libver}.tar.bz2
 # Source1-md5:	9c91940aa5f5563bb86c52ff07e8f99a
 Source2:	http://downloads.sourceforge.net/kicad/%{name}-doc-%{docver}.tar.bz2
@@ -45,7 +45,7 @@ programów:
 - gerbview - przeglądarka plików Gerber (dokumentów dla fotoplotera).
 
 %prep
-%setup -q  -n %{name}_sources
+%setup -q  -n stable
 
 %if "%{_lib}" != "lib"
 	%{__sed} -i -e "s@lib/@%{_lib}/@g" CMakeLists.txt
