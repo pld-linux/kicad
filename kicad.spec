@@ -2,7 +2,7 @@
 # - fix mimelnk installation
 #
 %define	ver	2012.01.19
-%define	verlong	%(echo %{ver} | tr -d .)
+%define	verlong	20120119
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
