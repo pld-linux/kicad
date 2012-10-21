@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=kicad
-Comment=Generates schematic diagrams and PCB artwork
-Comment[pl]=Generowanie schematów i płytek drukowanych
-Exec=kicad
-Icon=kicad
-Type=Application
-Terminal=false
-Categories=Utility;Electronics;
