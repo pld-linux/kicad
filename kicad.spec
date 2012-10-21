@@ -17,13 +17,18 @@ Group:		X11/Applications
 # bzr export -r 309 kicad-doc-2012.01.19
 
 Source0:	%{name}-%{ver}.tar.bz2
+# Source0-md5:	ad3ed5d41c6c5d5d520ec2f8cc6be623
 Source1:	%{name}-doc-%{ver}.tar.bz2
+# Source1-md5:	b4e8c57d915674a2df1ff99de314e15c
 Source2:	%{name}-libraries-%{ver}.tar.bz2
+# Source2-md5:	066a3af7bd4fbee7767758dd412fdbc7
 
 Source4:	%{name}-2010.05.09.x-kicad-pcbnew.desktop
 Source5:	pcbnew.desktop
 Source6:	%{name}-icons.tar.bz2
+# Source6-md5:	51459cb884444df60e55c95d50564be7
 Source7:	Epcos-MKT-1.0.tar.bz2
+# Source7-md5:	4dba5eca85fcec9bba491c1815963f80
 
 Patch10:	%{name}-%{ver}-real-version.patch
 Patch11:	%{name}-2011.07.12-fix-linking.patch
