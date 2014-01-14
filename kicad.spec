@@ -1,8 +1,8 @@
 # TODO:
 # - fix mimelnk installation
 #
-%define	ver	2012.01.19
-%define	verlong	20120119
+%define	ver	2013.06.11
+%define	verlong	20130611
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
@@ -12,16 +12,16 @@ License:	GPL v2+
 Group:		X11/Applications
 
 # Source files created from upstream's bazaar repository
-# bzr export -r 3256 kicad-2012.01.19
-# bzr export -r 114 kicad-libraries-2012.01.19
-# bzr export -r 309 kicad-doc-2012.01.19
+# bzr export -r 4021 kicad-2013.06.11
+# bzr export -r 263 kicad-libraries-2013.06.11
+# bzr export -r 464 kicad-doc-2013.06.11
 
 Source0:	%{name}-%{ver}.tar.bz2
-# Source0-md5:	ad3ed5d41c6c5d5d520ec2f8cc6be623
+# Source0-md5:	82ed9a23b9ef332621210eafd08101c2
 Source1:	%{name}-doc-%{ver}.tar.bz2
-# Source1-md5:	b4e8c57d915674a2df1ff99de314e15c
+# Source1-md5:	2ef38e351202f80f700a4ae96f898336
 Source2:	%{name}-libraries-%{ver}.tar.bz2
-# Source2-md5:	066a3af7bd4fbee7767758dd412fdbc7
+# Source2-md5:	5b35e2f2e022fa4be6a03021a6c04493
 
 Source4:	%{name}-2010.05.09.x-kicad-pcbnew.desktop
 Source5:	pcbnew.desktop
@@ -30,29 +30,22 @@ Source6:	%{name}-icons.tar.bz2
 Source7:	Epcos-MKT-1.0.tar.bz2
 # Source7-md5:	4dba5eca85fcec9bba491c1815963f80
 
-Patch10:	%{name}-%{ver}-real-version.patch
-Patch11:	%{name}-2011.07.12-fix-linking.patch
-Patch12:	%{name}-2011.07.12-boost-polygon-declare-gtlsort-earlier.patch
-Patch13:	%{name}-%{ver}-fix-linking.patch
-Patch14:	%{name}-%{ver}-fix-bom-in-python.patch
-Patch15:	%{name}-bug-921553.patch
+# Additional librairies from Walter Lain
+# http://smisioto.no-ip.org/elettronica/kicad/kicad-en.htm
+# kicad-walter-libraries is manually built by downloading all available files
 
-Patch20:	%{name}-%{ver}-fix-plotting-scale.patch
-Patch21:	%{name}-%{ver}-move-up-junction-button.rev3371.patch
-Patch22:	%{name}-%{ver}-thermal-relief.rev3281.patch
-Patch23:	%{name}-%{ver}-undo-redo-auto.rev3297.patch
-Patch24:	%{name}-%{ver}-cvpcb-preview.rev3303.patch
-Patch25:	%{name}-%{ver}-pcb-calculation.rev3328.patch
-Patch26:	%{name}-%{ver}-ps-plotting-width-correction.rev3342.patch
+Source8:	%{name}-walter-libraries-%{ver}.tar.bz2
+# Source8-md5:	9eba6363258b9efb552222b24b4630f2
 
+Patch0:		%{name}-build.patch
 URL:		http://www.kicad-pcb.org/
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6.4
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
-BuildRequires:	wxGTK2-unicode-gl-devel >= 2.8.11
-BuildRequires:	wxWidgets-devel >= 2.8.11
+BuildRequires:	wxGTK2-unicode-gl-devel >= 3.0.0
+BuildRequires:	wxWidgets-devel >= 3.0.0
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -76,22 +69,8 @@ programów:
 - gerbview - przeglądarka plików Gerber (dokumentów dla fotoplotera).
 
 %prep
-%setup -q -n %{name}-%{ver} -a 1 -a 2 -a 6 -a 7
-
-%patch10 -p0 -b .real-version
-%patch11 -p0 -b .fix-linking1
-%patch12 -p0 -b .gcc-4.7
-%patch13 -p0 -b .fix-linking2
-%patch14 -p1 -b .fix-bom-in-python
-%patch15 -p1 -b .fix-build
-
-%patch20 -p0 -b .fix-plotting-scale
-%patch21 -p0 -b .junction-button
-%patch22 -p0 -b .thermal-relief
-%patch23 -p1 -b .undo-redo
-%patch24 -p1 -b .cvpcb-preview
-%patch25 -p0 -b .pcb-calculation
-%patch26 -p1 -b .width-correction
+%setup -q -n %{name}-%{ver} -a 1 -a 2 -a 6 -a 7 -a 8
+%patch0 -p1
 
 #kicad-doc.noarch: W: file-not-utf8 %{_docdir}/kicad/AUTHORS.txt
 iconv -f iso8859-1 -t utf-8 AUTHORS.txt > AUTHORS.conv && mv -f AUTHORS.conv AUTHORS.txt
@@ -105,6 +84,12 @@ iconv -f iso8859-1 -t utf-8 AUTHORS.txt > AUTHORS.conv && mv -f AUTHORS.conv AUT
 cd Epcos-MKT-1.0
 cp -pR library ../%{name}-libraries-%{version}/
 cp -pR modules ../%{name}-libraries-%{version}/
+cd ..
+
+# Add Walter libraries
+cd %{name}-walter-libraries-%{ver}
+cp -pR library ../%{name}-libraries-%{ver}/
+cp -pR modules ../%{name}-libraries-%{ver}/
 cd ..
 
 #
@@ -121,6 +106,9 @@ cd build
 	VERBOSE=1
 cd ../..
 
+#
+# Core components
+#
 install -d build
 cd build
 %cmake \
@@ -166,6 +154,9 @@ install template/%{name}.pro $RPM_BUILD_ROOT%{_datadir}/%{name}/template
 
 # install new mime type
 install -pm 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/mimelnk/application/x-%{name}-pcbnew.desktop
+
+mv $RPM_BUILD_ROOT%{_datadir}/mimelnk/application/*.desktop \
+	$RPM_BUILD_ROOT%{_desktopdir}
 
 # install mimetype and application icons
 install -pm 644 %{name}-icons/resources/linux/mime/icons/hicolor/32x32/mimetypes/application-x-kicad-eeschema.png \
@@ -256,6 +247,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*x*/*/*.png
 %{_iconsdir}/hicolor/scalable/*/*.svg
 %{_datadir}/mime/packages/kicad.xml
-#%{_datadir}/mimelnk/application/x-kicad-pcbnew.desktop
-#%{_datadir}/mimelnk/application/x-kicad-project.desktop
-#%{_datadir}/mimelnk/application/x-kicad-schematic.desktop
+%{_desktopdir}/x-kicad-pcbnew.desktop
+%{_desktopdir}/x-kicad-project.desktop
+%{_desktopdir}/x-kicad-schematic.desktop
