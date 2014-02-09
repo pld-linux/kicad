@@ -7,7 +7,7 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	%{verlong}
-Release:	0.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 
@@ -215,13 +215,11 @@ install -pm 644 %{name}-icons/resources/linux/mime/icons/hicolor/16x16/apps/kica
 %update_mime_database
 %update_desktop_database_post
 %update_icon_cache hicolor
-%update_icon_cache scalable
 
 %postun
 %update_mime_database
 %update_desktop_database_postun
 %update_icon_cache hicolor
-%update_icon_cache scalable
 
 %clean
 rm -rf $RPM_BUILD_ROOT
