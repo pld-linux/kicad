@@ -267,8 +267,7 @@ BuildArch:	noarch
 Documentation and tutorials for kicad in English
 
 %package doc-ca
-Summary:	Documentation for Kicad in German
-Summary(fr.UTF-8):	Documentations pour kicad en allemand
+Summary:	Documentation for Kicad in Catalan
 Group:		Documentation
 Requires:	%{name}-doc = %{version}-%{release}
 %if "%{_rpmversion}" >= "5"
@@ -276,7 +275,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-ca
-Documentation and tutorials for Kicad in German
+Documentation and tutorials for Kicad in Catalan.
 
 %package doc-de
 Summary:	Documentation for Kicad in German
@@ -288,7 +287,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-de
-Documentation and tutorials for Kicad in German
+Documentation and tutorials for Kicad in German.
 
 %package doc-es
 Summary:	Documentation for Kicad in Spanish
@@ -300,7 +299,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-es
-Documentation and tutorials for Kicad in Spanish
+Documentation and tutorials for Kicad in Spanish.
 
 %package doc-fr
 Summary:	Documentation for Kicad in French
@@ -312,11 +311,10 @@ BuildArch:	noarch
 %endif
 
 %description doc-fr
-Documentation and tutorials for Kicad in French
+Documentation and tutorials for Kicad in French.
 
 %package doc-id
-Summary:	Documentation for Kicad in Hungarian
-Summary(fr.UTF-8):	Documentations pour kicad en hongrois
+Summary:	Documentation for Kicad in Indonesian
 Group:		Documentation
 Requires:	%{name}-doc = %{version}-%{release}
 %if "%{_rpmversion}" >= "5"
@@ -324,7 +322,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-id
-Documentation and tutorials for Kicad in Hungarian
+Documentation and tutorials for Kicad in Indonesian.
 
 %package doc-it
 Summary:	Documentation for Kicad in Italian
@@ -336,7 +334,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-it
-Documentation and tutorials for Kicad in Italian
+Documentation and tutorials for Kicad in Italian.
 
 %package doc-ja
 Summary:	Documentation for Kicad in Japanese
@@ -348,11 +346,10 @@ BuildArch:	noarch
 %endif
 
 %description doc-ja
-Documentation and tutorials for Kicad in Japanese
+Documentation and tutorials for Kicad in Japanese.
 
 %package doc-nl
-Summary:	Documentation for Kicad in Portuguese
-Summary(fr.UTF-8):	Documentations pour kicad en portugais
+Summary:	Documentation for Kicad in Dutch
 Group:		Documentation
 Requires:	%{name}-doc = %{version}-%{release}
 %if "%{_rpmversion}" >= "5"
@@ -360,7 +357,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-nl
-Documentation and tutorials for Kicad in Portuguese
+Documentation and tutorials for Kicad in Dutch.
 
 %package doc-pl
 Summary:	Documentation for Kicad in Polish
@@ -372,7 +369,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-pl
-Documentation and tutorials for Kicad in Polish
+Documentation and tutorials for Kicad in Polish.
 
 %package doc-ru
 Summary:	Documentation for Kicad in Russian
@@ -384,7 +381,7 @@ BuildArch:	noarch
 %endif
 
 %description doc-ru
-Documentation and tutorials for Kicad in Russian
+Documentation and tutorials for Kicad in Russian.
 
 %prep
 %setup -q -a 1 -a 2 -a 3
