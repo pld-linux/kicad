@@ -5,7 +5,7 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	4.0.6
-Release:	0.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://launchpad.net/kicad/4.0/%{version}/+download/%{name}-%{version}.tar.xz
