@@ -384,17 +384,17 @@ BuildArch:	noarch
 Documentation and tutorials for Kicad in Russian.
 
 %prep
-%setup -q -a 1 -a 2 -a 3
-%setup -qD %(seq -f '-a %g' 100 192 | xargs)
-
+%setup -q -a 1 -a 2 -a 3 %(seq -f '-a %g' 100 192 | xargs)
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 install -d modules
-for module in *.pretty-*; do
-	%{__mv} $module modules/${module%%.pretty-*}
+%{__sed} -e '/(lib/!d' -e 's/.*(name \([^)]*\)).*uri \${KIGITHUB}\/\([^)]*\)).*/\2 \1/' \
+	%{name}-library-%{version}/template/fp-lib-table.for-github | \
+while read src dest ; do
+	%{__mv} $src-%{version} modules/$dest
 done
 
 %build
@@ -402,7 +402,7 @@ done
 mkdir %{name}-library-%{version}/build
 cd %{name}-library-%{version}/build
 %cmake ..
-%{__make} -j1 VERBOSE=1
+%{__make} VERBOSE=1
 cd ../..
 
 # Documentation
@@ -410,7 +410,7 @@ mkdir %{name}-doc-%{version}/build
 cd %{name}-doc-%{version}/build
 %cmake .. \
 	-DBUILD_FORMATS=html
-%{__make} -j1 VERBOSE=1
+%{__make} VERBOSE=1
 cd ../..
 
 # Translations
@@ -418,7 +418,7 @@ mkdir %{name}-i18n-%{version}/build
 cd %{name}-i18n-%{version}/build
 %cmake .. \
 	-DKICAD_I18N_UNIX_STRICT_PATH=ON
-%{__make} -j1 VERBOSE=1
+%{__make} VERBOSE=1
 cd ../..
 
 # Core components
