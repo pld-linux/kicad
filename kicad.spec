@@ -230,6 +230,9 @@ BuildRequires:	wxGTK2-unicode-devel >= 3.0.0
 BuildRequires:	wxGTK2-unicode-gl-devel >= 3.0.0
 BuildRequires:	wxWidgets-devel >= 3.0.0
 BuildRequires:	zlib-devel
+Obsoletes:	kicad-doc-hu < 4.0.6-1
+Obsoletes:	kicad-doc-pt < 4.0.6-1
+Obsoletes:	kicad-doc-zh_CN < 4.0.6-1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
