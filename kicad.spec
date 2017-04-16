@@ -5,7 +5,7 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	4.0.6
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -270,7 +270,7 @@ Documentation and tutorials for kicad in English
 %package doc-ca
 Summary:	Documentation for Kicad in Catalan
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -282,7 +282,7 @@ Documentation and tutorials for Kicad in Catalan.
 Summary:	Documentation for Kicad in German
 Summary(fr.UTF-8):	Documentations pour kicad en allemand
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -294,7 +294,7 @@ Documentation and tutorials for Kicad in German.
 Summary:	Documentation for Kicad in Spanish
 Summary(fr.UTF-8):	Documentations pour kicad en espagnol
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -306,7 +306,7 @@ Documentation and tutorials for Kicad in Spanish.
 Summary:	Documentation for Kicad in French
 Summary(fr.UTF-8):	Documentations pour kicad en français
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -317,7 +317,7 @@ Documentation and tutorials for Kicad in French.
 %package doc-id
 Summary:	Documentation for Kicad in Indonesian
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -329,7 +329,7 @@ Documentation and tutorials for Kicad in Indonesian.
 Summary:	Documentation for Kicad in Italian
 Summary(fr.UTF-8):	Documentations pour kicad en italien
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -341,7 +341,7 @@ Documentation and tutorials for Kicad in Italian.
 Summary:	Documentation for Kicad in Japanese
 Summary(fr.UTF-8):	Documentations pour kicad en japonais
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -352,7 +352,7 @@ Documentation and tutorials for Kicad in Japanese.
 %package doc-nl
 Summary:	Documentation for Kicad in Dutch
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -364,7 +364,7 @@ Documentation and tutorials for Kicad in Dutch.
 Summary:	Documentation for Kicad in Polish
 Summary(fr.UTF-8):	Documentations pour kicad en polonais
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -376,7 +376,7 @@ Documentation and tutorials for Kicad in Polish.
 Summary:	Documentation for Kicad in Russian
 Summary(fr.UTF-8):	Documentations pour kicad en russe
 Group:		Documentation
-Requires:	%{name}-doc = %{version}-%{release}
+Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
