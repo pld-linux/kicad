@@ -1,0 +1,148 @@
+--- kicad-5.0.0/common/system/libcontext.cpp.orig	2018-07-13 21:53:52.000000000 +0200
++++ kicad-5.0.0/common/system/libcontext.cpp	2018-08-12 12:01:30.930309888 +0200
+@@ -258,12 +258,10 @@
+ #endif
+ 
+ #if defined(LIBCONTEXT_PLATFORM_linux_i386) && defined(LIBCONTEXT_COMPILER_gcc)
++intptr_t LIBCONTEXT_CALL_CONVENTION libcontext::jump_fcontext( libcontext::fcontext_t* ofc, libcontext::fcontext_t nfc,
++        intptr_t vp, bool preserve_fpu )
++{
+ __asm (
+-".text\n"
+-".globl jump_fcontext\n"
+-".align 2\n"
+-".type jump_fcontext,@function\n"
+-"jump_fcontext:\n"
+ "    movl  0x10(%esp), %ecx\n"
+ "    pushl  %ebp  \n"
+ "    pushl  %ebx  \n"
+@@ -293,19 +291,16 @@
+ "    popl  %edx\n"
+ "    movl  %eax, 0x4(%esp)\n"
+ "    jmp  *%edx\n"
+-".size jump_fcontext,.-jump_fcontext\n"
+-".section .note.GNU-stack,\"\",%progbits\n"
+ );
++}
+ 
+ #endif
+ 
+ #if defined(LIBCONTEXT_PLATFORM_linux_i386) && defined(LIBCONTEXT_COMPILER_gcc)
++libcontext::fcontext_t LIBCONTEXT_CALL_CONVENTION libcontext::make_fcontext( void* sp, size_t size,
++        void (* fn)( intptr_t ) )
++{
+ __asm (
+-".text\n"
+-".globl make_fcontext\n"
+-".align 2\n"
+-".type make_fcontext,@function\n"
+-"make_fcontext:\n"
+ "    movl  0x4(%esp), %eax\n"
+ "    leal  -0x8(%eax), %eax\n"
+ "    andl  $-16, %eax\n"
+@@ -327,19 +322,16 @@
+ "    movl  %eax, (%esp)\n"
+ "    call  _exit@PLT\n"
+ "    hlt\n"
+-".size make_fcontext,.-make_fcontext\n"
+-".section .note.GNU-stack,\"\",%progbits\n"
+ );
++}
+ 
+ #endif
+ 
+ #if defined(LIBCONTEXT_PLATFORM_linux_x86_64) && defined(LIBCONTEXT_COMPILER_gcc)
++intptr_t LIBCONTEXT_CALL_CONVENTION libcontext::jump_fcontext( libcontext::fcontext_t* ofc, libcontext::fcontext_t nfc,
++        intptr_t vp, bool preserve_fpu )
++{
+ __asm (
+-".text\n"
+-".globl jump_fcontext\n"
+-".type jump_fcontext,@function\n"
+-".align 16\n"
+-"jump_fcontext:\n"
+ "    pushq  %rbp  \n"
+ "    pushq  %rbx  \n"
+ "    pushq  %r15  \n"
+@@ -370,19 +362,16 @@
+ "    movq  %rdx, %rax\n"
+ "    movq  %rdx, %rdi\n"
+ "    jmp  *%r8\n"
+-".size jump_fcontext,.-jump_fcontext\n"
+-".section .note.GNU-stack,\"\",%progbits\n"
+ );
++}
+ 
+ #endif
+ 
+ #if defined(LIBCONTEXT_PLATFORM_linux_x86_64) && defined(LIBCONTEXT_COMPILER_gcc)
++libcontext::fcontext_t LIBCONTEXT_CALL_CONVENTION libcontext::make_fcontext( void* sp, size_t size,
++        void (* fn)( intptr_t ) )
++{
+ __asm (
+-".text\n"
+-".globl make_fcontext\n"
+-".type make_fcontext,@function\n"
+-".align 16\n"
+-"make_fcontext:\n"
+ "    movq  %rdi, %rax\n"
+ "    andq  $-16, %rax\n"
+ "    leaq  -0x48(%rax), %rax\n"
+@@ -396,9 +385,8 @@
+ "    xorq  %rdi, %rdi\n"
+ "    call  _exit@PLT\n"
+ "    hlt\n"
+-".size make_fcontext,.-make_fcontext\n"
+-".section .note.GNU-stack,\"\",%progbits\n"
+ );
++}
+ 
+ #endif
+ 
+--- kicad-5.0.0/include/system/libcontext.h.orig	2018-07-13 21:53:52.000000000 +0200
++++ kicad-5.0.0/include/system/libcontext.h	2018-08-12 11:59:20.941248992 +0200
+@@ -30,15 +30,19 @@
+     #if defined(__x86_64__) || defined(__amd64__)
+         #define LIBCONTEXT_PLATFORM_linux_x86_64
+         #define LIBCONTEXT_CALL_CONVENTION
++        #define LIBCONTEXT_FUNCTION_ALIGN 16
+     #elif __i386__
+         #define LIBCONTEXT_PLATFORM_linux_i386
+         #define LIBCONTEXT_CALL_CONVENTION
++        #define LIBCONTEXT_FUNCTION_ALIGN 2
+     #elif __arm__
+         #define LIBCONTEXT_PLATFORM_linux_arm32
+         #define LIBCONTEXT_CALL_CONVENTION
++        #define LIBCONTEXT_FUNCTION_ALIGN 2
+     #elif __aarch64__
+         #define LIBCONTEXT_PLATFORM_linux_arm64
+         #define LIBCONTEXT_CALL_CONVENTION
++        #define LIBCONTEXT_FUNCTION_ALIGN 2
+     #endif
+ 
+     #elif defined(__MINGW32__) || defined(__MINGW64__)
+@@ -74,22 +78,15 @@
+ 
+ typedef void* fcontext_t;
+ 
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+ 
+ 
+ intptr_t LIBCONTEXT_CALL_CONVENTION jump_fcontext( fcontext_t* ofc, fcontext_t nfc,
+-        intptr_t vp, bool preserve_fpu = true );
++        intptr_t vp, bool preserve_fpu = true )  __attribute__ ((naked, aligned(LIBCONTEXT_FUNCTION_ALIGN) ));
+ fcontext_t LIBCONTEXT_CALL_CONVENTION make_fcontext( void* sp, size_t size,
+-        void (* fn)( intptr_t ) );
++        void (* fn)( intptr_t ) )  __attribute__ ((naked, aligned(LIBCONTEXT_FUNCTION_ALIGN) ));
+ 
+ #ifdef __cplusplus
+ }    // namespace
+ #endif
+ 
+-#ifdef __cplusplus
+-}    // extern "C"
+-#endif
+-
+ #endif

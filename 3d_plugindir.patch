@@ -1,0 +1,24 @@
+--- kicad-5.0.0/3d-viewer/3d_plugin_dir.h.in.orig	2018-08-15 21:40:42.199391486 +0200
++++ kicad-5.0.0/3d-viewer/3d_plugin_dir.h.in	2018-08-15 21:40:57.405953832 +0200
+@@ -1 +1 @@
+-#define PLUGINDIR "@CMAKE_INSTALL_LIBDIR@"
++#define PLUGINDIR "@CMAKE_INSTALL_FULL_LIBDIR@"
+--- kicad-5.0.0/3d-viewer/3d_cache/3d_plugin_manager.cpp.orig	2018-07-13 21:53:52.000000000 +0200
++++ kicad-5.0.0/3d-viewer/3d_cache/3d_plugin_manager.cpp	2018-08-15 21:44:37.981095083 +0200
+@@ -149,15 +149,7 @@
+     #endif
+ 
+     #ifndef _WIN32
+-        // multiarch friendly determination of the plugin directory: the executable dir
+-        // is first determined via wxStandardPaths::Get().GetExecutablePath() and then
+-        // the CMAKE_INSTALL_LIBDIR path is appended relative to the executable dir.
+-
+-        fn.Assign( wxStandardPaths::Get().GetExecutablePath() );
+-        fn.RemoveLastDir();
+-        wxString tfname = fn.GetPathWithSep();
+-        tfname.Append( wxString::FromUTF8Unchecked( PLUGINDIR ) );
+-        fn.Assign( tfname, "");
++        fn.Assign( wxString::FromUTF8Unchecked( PLUGINDIR ), "");
+         fn.AppendDir( "kicad" );
+     #else
+         // on windows the plugins directory is within the executable's directory
