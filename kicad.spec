@@ -44,6 +44,7 @@ BuildRequires:	ngspice-devel
 BuildRequires:	openssl-devel
 BuildRequires:	perl-Unicode-LineBreak
 BuildRequires:	po4a >= 0.51
+BuildRequires:	python-wxPython-devel
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
