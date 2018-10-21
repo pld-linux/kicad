@@ -4,25 +4,25 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.0.0
-Release:	2
+Version:	5.0.1
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://launchpad.net/kicad/5.0/%{version}/+download/%{name}-%{version}.tar.xz
-# Source0-md5:	99a39910a3f7d8320b605bb9a9ff3af8
+# Source0-md5:	b76a87ec9a14d502326de9102c75fb05
 Source1:	https://github.com/KiCad/kicad-doc/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	0d6e78e1087a04c8e6385f76c0727bf7
+# Source1-md5:	22525368367fa27cb89957a47c3cefe4
 Source2:	https://github.com/KiCad/kicad-i18n/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	1e1503b89c575c80ff51583d40667c14
+# Source2-md5:	8089b0b09b0f74daf630695113c5ca10
 Source3:	https://github.com/KiCad/kicad-symbols/archive/%{version}/%{name}-symbols-%{version}.tar.gz
-# Source3-md5:	03cb33312062571118a277bafd01c06d
+# Source3-md5:	76a2a87bd420090dff4928907fb94ece
 Source4:	https://github.com/KiCad/kicad-footprints/archive/%{version}/%{name}-footprints-%{version}.tar.gz
-# Source4-md5:	e8ce40c47b108280d7878f858899ab10
+# Source4-md5:	a3a06afd7518d627ef675d3027f00acb
 Source5:	https://github.com/KiCad/kicad-packages3D/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
-# Source5-md5:	aac66499bbbd9f21ad3e90af7ba854d2
+# Source5-md5:	b1444fde8313b68b59f77e80dba94d0b
 Source6:	https://github.com/KiCad/kicad-templates/archive/%{version}/%{name}-templates-%{version}.tar.gz
-# Source6-md5:	d8a5c09a33588a73eb8552c83bdb0381
+# Source6-md5:	4240769799635e18c02da87791a088a6
 Patch0:		nostrip.patch
 # https://code.launchpad.net/~lkundrak/kicad/appstream-data/+merge/293391
 Patch1:		lto.patch
