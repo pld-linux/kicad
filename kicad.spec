@@ -4,32 +4,29 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.0.2
+Version:	5.1.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://launchpad.net/kicad/5.0/%{version}/+download/%{name}-%{version}.tar.xz
-# Source0-md5:	bf50bb859a722f02c1dbb53d5b69ad5d
+# Source0-md5:	735cb4d87d3819bf309495746eb13792
 Source1:	https://github.com/KiCad/kicad-doc/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	27d3623a32a1776b119dc103debca521
+# Source1-md5:	47142ec31256c1dea25bcd6f4dcd7071
 Source2:	https://github.com/KiCad/kicad-i18n/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	540eb9bbfb2004749ded2553adfcefd1
+# Source2-md5:	c1e8fdd7bf4d1377f7ee0968fb5ab1d6
 Source3:	https://github.com/KiCad/kicad-symbols/archive/%{version}/%{name}-symbols-%{version}.tar.gz
-# Source3-md5:	12d1baa4b77f6aa90c0ebe013934bf11
+# Source3-md5:	f78847a49329c9d8bfd4f5aac7dc36b1
 Source4:	https://github.com/KiCad/kicad-footprints/archive/%{version}/%{name}-footprints-%{version}.tar.gz
-# Source4-md5:	caa7a7e263fb2520a95032485c3e2d13
+# Source4-md5:	cbdc858a0657878df24cec5eb0ab64a0
 Source5:	https://github.com/KiCad/kicad-packages3D/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
-# Source5-md5:	9166a728ba291fd943165f14c04399b0
+# Source5-md5:	dde395e19f69881930a8820a922f239a
 Source6:	https://github.com/KiCad/kicad-templates/archive/%{version}/%{name}-templates-%{version}.tar.gz
-# Source6-md5:	8ad047f22a0ee9ddcf113300d83a7d83
+# Source6-md5:	451fc7de145ff122f1de08dfcef368d6
 Patch0:		nostrip.patch
-# https://code.launchpad.net/~lkundrak/kicad/appstream-data/+merge/293391
 Patch1:		lto.patch
-Patch2:		python.patch
-Patch3:		3d_plugindir.patch
 URL:		http://www.kicad-pcb.org/
-BuildRequires:	GLM
+BuildRequires:	GLM >= 0.9.9.4
 BuildRequires:	OCE-devel
 BuildRequires:	appstream-glib
 BuildRequires:	asciidoc
@@ -198,17 +195,6 @@ BuildArch:	noarch
 %description doc-ja
 Documentation and tutorials for Kicad in Japanese.
 
-%package doc-nl
-Summary:	Documentation for Kicad in Dutch
-Group:		Documentation
-Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
-
-%description doc-nl
-Documentation and tutorials for Kicad in Dutch.
-
 %package doc-pl
 Summary:	Documentation for Kicad in Polish
 Summary(fr.UTF-8):	Documentations pour kicad en polonais
@@ -249,8 +235,6 @@ Documentation and tutorials for Kicad in Chinese.
 %setup -q -a 1 -a 2 -a 3 -a 4 -a 5 -a 6
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 
@@ -436,10 +420,6 @@ rm -rf $RPM_BUILD_ROOT
 %files doc-ja
 %defattr(644,root,root,755)
 %lang(ja) %{_docdir}/%{name}/help/ja
-
-%files doc-nl
-%defattr(644,root,root,755)
-%lang(nl) %{_docdir}/%{name}/help/nl
 
 %files doc-pl
 %defattr(644,root,root,755)

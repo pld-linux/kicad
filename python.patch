@@ -1,8 +1,0 @@
---- kicad-5.0.0/pcbnew/python/plugins/touch_slider_wizard.py.orig	2018-07-13 21:53:52.000000000 +0200
-+++ kicad-5.0.0/pcbnew/python/plugins/touch_slider_wizard.py	2018-08-13 08:32:44.840047256 +0200
-@@ -1,4 +1,4 @@
--#!/usr/bin/python
-+#!/usr/bin/python2
- 
- #
- # This program source code file is part of KiCad, a free EDA CAD application.
