@@ -5,7 +5,7 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	5.1.0
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -50,6 +50,7 @@ BuildRequires:	wxGTK2-unicode-gl-devel >= 3.0.0
 BuildRequires:	wxWidgets-devel >= 3.0.0
 BuildRequires:	zlib-devel
 Obsoletes:	kicad-doc-hu < 1:4.0.6-1
+Obsoletes:	kicad-doc-nl < 1:5.1.0-1
 Obsoletes:	kicad-doc-pt < 1:4.0.6-1
 Obsoletes:	kicad-doc-zh_CN < 1:4.0.6-1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
