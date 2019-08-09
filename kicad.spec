@@ -1,28 +1,31 @@
 # TODO:
 # - fix mimelnk installation
 #
+# Conditional build:
+%bcond_without	packages3D	#do not build packages3D
+
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.1.2
+Version:	5.1.3
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://launchpad.net/kicad/5.0/%{version}/+download/%{name}-%{version}.tar.xz
-# Source0-md5:	d3aa58ebcb1113ffbe49ec7643a0f09a
+# Source0-md5:	2b19f725af87acb95a1738ca7e77454a
 Source1:	https://github.com/KiCad/kicad-doc/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	e0ca11035e3b3ce072988bcaa7f69116
+# Source1-md5:	24aca594d7eaafee02c9dc710fc7cc0a
 Source2:	https://github.com/KiCad/kicad-i18n/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	1f76dd0720c10081c56f32d1201be54b
+# Source2-md5:	cf1897243d31bf6882ab6e60f77adb4a
 Source3:	https://github.com/KiCad/kicad-symbols/archive/%{version}/%{name}-symbols-%{version}.tar.gz
-# Source3-md5:	63d41e72a4ca16ecc534f174565ca8e2
+# Source3-md5:	84b1d245deb8ee043384f1b933fc485d
 Source4:	https://github.com/KiCad/kicad-footprints/archive/%{version}/%{name}-footprints-%{version}.tar.gz
-# Source4-md5:	beb7a445253bf769b97fb46b857e9f37
+# Source4-md5:	7aa398aa0f82295b7c27399538145ee7
 Source5:	https://github.com/KiCad/kicad-packages3D/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
-# Source5-md5:	2c9ecc770ff3e79c191f0a3935c23da8
+# Source5-md5:	7cafcf48ecba76b8c3e0280684774e9b
 Source6:	https://github.com/KiCad/kicad-templates/archive/%{version}/%{name}-templates-%{version}.tar.gz
-# Source6-md5:	b4f5dd7af99df5f68cea55b9bcb5efe2
+# Source6-md5:	a15e178b79df779c36195a7ff2997f48
 Patch0:		nostrip.patch
 Patch1:		lto.patch
 URL:		http://www.kicad-pcb.org/
@@ -233,7 +236,7 @@ BuildArch:	noarch
 Documentation and tutorials for Kicad in Chinese.
 
 %prep
-%setup -q -a 1 -a 2 -a 3 -a 4 -a 5 -a 6
+%setup -q -a 1 -a 2 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
 %patch0 -p1
 %patch1 -p1
 
@@ -250,7 +253,9 @@ build_library() {
 build_library %{name}-symbols-%{version}
 build_library %{name}-footprints-%{version}
 build_library %{name}-templates-%{version}
+%if %{with packages3D}
 build_library %{name}-packages3D-%{version}
+%endif
 
 # Documentation
 mkdir %{name}-doc-%{version}/build
@@ -295,7 +300,11 @@ install_library() {
 install_library %{name}-symbols-%{version}
 install_library %{name}-footprints-%{version}
 install_library %{name}-templates-%{version}
+%if %{with packages3D}
 install_library %{name}-packages3D-%{version}
+%else
+install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/modules/packages3d
+%endif
 
 # Documentation
 %{__make} -C %{name}-doc-%{version}/build install \
@@ -383,9 +392,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/modules/*.pretty
 %{_datadir}/%{name}/template/*
 
+%if %{with packages3D}
 %files packages3D
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/modules/packages3d/*
+%endif
 
 %files doc
 %defattr(644,root,root,755)
