@@ -7,25 +7,25 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.1.5
-Release:	2
+Version:	5.1.6
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://launchpad.net/kicad/5.0/%{version}/+download/%{name}-%{version}.tar.xz
-# Source0-md5:	58e884272563e4636c9b83c275eea637
-Source1:	https://github.com/KiCad/kicad-doc/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	093bcdf18cd8d9aed3d1d566045fc8c6
-Source2:	https://github.com/KiCad/kicad-i18n/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	fb7ea1548bae963e409cf7158c409ede
+Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	3fadd95d0aeb0cb85a7d0f69cf3724dd
+Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
+# Source1-md5:	725f3ba0bf17473e081896fc3767e874
+Source2:	https://gitlab.com/kicad/code/kicad-i18n/-/archive/%{version}/%{name}-i18n-%{version}.tar.gz
+# Source2-md5:	8c90edd413ffdea0dd06541d696a7041
 Source3:	https://github.com/KiCad/kicad-symbols/archive/%{version}/%{name}-symbols-%{version}.tar.gz
-# Source3-md5:	943175449bd7a5e2733a16e896786da4
+# Source3-md5:	436e5436ec3b7025a2a099eb97c81ae7
 Source4:	https://github.com/KiCad/kicad-footprints/archive/%{version}/%{name}-footprints-%{version}.tar.gz
-# Source4-md5:	7722484abaf84a78dadc925070a07f7f
+# Source4-md5:	6f5df88bfda6ffc309c6a82381f0611d
 Source5:	https://github.com/KiCad/kicad-packages3D/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
-# Source5-md5:	13ec0aeb37f90c5f6385ce3948cce778
+# Source5-md5:	f7bc330a4538d543972d63f1ce2e44a5
 Source6:	https://github.com/KiCad/kicad-templates/archive/%{version}/%{name}-templates-%{version}.tar.gz
-# Source6-md5:	948e75ae5cf2dd8ced504d18f7271cff
+# Source6-md5:	e04291d285520ebc33bcd5670a9c6c43
 Patch0:		nostrip.patch
 URL:		http://www.kicad-pcb.org/
 BuildRequires:	GLM >= 0.9.9.4
