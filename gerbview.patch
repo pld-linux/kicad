@@ -1,0 +1,120 @@
+commit 51708bab499464d164241ea486c288f653b95320
+Author: jean-pierre charras <jp.charras@wanadoo.fr>
+Date:   Mon Nov 9 10:32:12 2020 +0100
+
+    Gerbview, Legacy graphic mode: fix missing or incorrect inits related to zoom.
+    
+    Fixes #6326
+    https://gitlab.com/kicad/code/kicad/issues/6326
+
+diff --git a/gerbview/files.cpp b/gerbview/files.cpp
+index c6b555f36..a10c191f5 100644
+--- a/gerbview/files.cpp
++++ b/gerbview/files.cpp
+@@ -57,6 +57,8 @@ void GERBVIEW_FRAME::OnGbrFileHistory( wxCommandEvent& event )
+     {
+         Erase_Current_DrawLayer( false );
+         LoadGerberFiles( fn );
++        Zoom_Automatique( false );
++        m_canvas->Refresh();
+     }
+ }
+ 
+@@ -71,6 +73,8 @@ void GERBVIEW_FRAME::OnDrlFileHistory( wxCommandEvent& event )
+     {
+         Erase_Current_DrawLayer( false );
+         LoadExcellonFiles( fn );
++        Zoom_Automatique( false );
++        m_canvas->Refresh();
+     }
+ }
+ 
+@@ -84,6 +88,8 @@ void GERBVIEW_FRAME::OnZipFileHistory( wxCommandEvent& event )
+     {
+         Erase_Current_DrawLayer( false );
+         LoadZipArchiveFile( filename );
++        Zoom_Automatique( false );
++        m_canvas->Refresh();
+     }
+ }
+ 
+@@ -93,7 +99,11 @@ void GERBVIEW_FRAME::OnJobFileHistory( wxCommandEvent& event )
+     wxString filename = GetFileFromHistory( event.GetId(), _( "Job files" ), &m_jobFileHistory );
+ 
+     if( !filename.IsEmpty() )
++    {
+         LoadGerberJobFile( filename );
++        Zoom_Automatique( false );
++        m_canvas->Refresh();
++    }
+ }
+ 
+ 
+@@ -106,7 +116,9 @@ void GERBVIEW_FRAME::Files_io( wxCommandEvent& event )
+     {
+     case wxID_FILE:
+         LoadGerberFiles( wxEmptyString );
+-        break;
++        Zoom_Automatique( false );
++        m_canvas->Refresh();
++       break;
+ 
+     case ID_GERBVIEW_ERASE_ALL:
+         Clear_DrawLayers( false );
+@@ -148,21 +160,26 @@ void GERBVIEW_FRAME::Files_io( wxCommandEvent& event )
+         // Load the layers from stored paths
+         wxBusyCursor wait;
+         loadListOfGerberAndDrillFiles( wxEmptyString, listOfGerberFiles, &fileType );
++        Zoom_Automatique( false );
++        m_canvas->Refresh();
+     }
+     break;
+ 
+     case ID_GERBVIEW_LOAD_DRILL_FILE:
+         LoadExcellonFiles( wxEmptyString );
++        Zoom_Automatique( false );
+         m_canvas->Refresh();
+         break;
+ 
+     case ID_GERBVIEW_LOAD_ZIP_ARCHIVE_FILE:
+         LoadZipArchiveFile( wxEmptyString );
++        Zoom_Automatique( false );
+         m_canvas->Refresh();
+         break;
+ 
+     case ID_GERBVIEW_LOAD_JOB_FILE:
+         LoadGerberJobFile( wxEmptyString );
++        Zoom_Automatique( false );
+         m_canvas->Refresh();
+         break;
+ 
+@@ -373,8 +390,6 @@ bool GERBVIEW_FRAME::loadListOfGerberAndDrillFiles( const wxString& aPath,
+ 
+     SetVisibleLayers( visibility );
+ 
+-    Zoom_Automatique( false );
+-
+     // Synchronize layers tools with actual active layer:
+     ReFillLayerWidget();
+ 
+@@ -700,8 +715,6 @@ bool GERBVIEW_FRAME::LoadZipArchiveFile( const wxString& aFullFileName )
+     if( filename.IsOk() )
+         unarchiveFiles( filename.GetFullPath(), &reporter );
+ 
+-    Zoom_Automatique( false );
+-
+     // Synchronize layers tools with actual active layer:
+     ReFillLayerWidget();
+     SetActiveLayer( GetActiveLayer() );
+diff --git a/gerbview/gerbview_frame.cpp b/gerbview/gerbview_frame.cpp
+index 6953243e0..890844501 100644
+--- a/gerbview/gerbview_frame.cpp
++++ b/gerbview/gerbview_frame.cpp
+@@ -222,6 +222,7 @@ GERBVIEW_FRAME::GERBVIEW_FRAME( KIWAY* aKiway, wxWindow* aParent ):
+     }
+     else
+     {
++        UseGalCanvas( false );
+         m_colorsSettings->SetLegacyMode( true );
+         m_canvas->Refresh();
+     }

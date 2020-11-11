@@ -7,26 +7,27 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.1.6
+Version:	5.1.8
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	3fadd95d0aeb0cb85a7d0f69cf3724dd
+# Source0-md5:	c573140e521e29441d71f1a39b79752f
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	725f3ba0bf17473e081896fc3767e874
+# Source1-md5:	32fcae80e827453f6a71bba837fdfd0f
 Source2:	https://gitlab.com/kicad/code/kicad-i18n/-/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	8c90edd413ffdea0dd06541d696a7041
-Source3:	https://github.com/KiCad/kicad-symbols/archive/%{version}/%{name}-symbols-%{version}.tar.gz
-# Source3-md5:	436e5436ec3b7025a2a099eb97c81ae7
-Source4:	https://github.com/KiCad/kicad-footprints/archive/%{version}/%{name}-footprints-%{version}.tar.gz
-# Source4-md5:	6f5df88bfda6ffc309c6a82381f0611d
-Source5:	https://github.com/KiCad/kicad-packages3D/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
-# Source5-md5:	f7bc330a4538d543972d63f1ce2e44a5
-Source6:	https://github.com/KiCad/kicad-templates/archive/%{version}/%{name}-templates-%{version}.tar.gz
-# Source6-md5:	e04291d285520ebc33bcd5670a9c6c43
+# Source2-md5:	792388e3a74410786085314d4069d408
+Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
+# Source3-md5:	35065c2ccd6f08a38a5557caf3ce26e2
+Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
+# Source4-md5:	7e6b08b971adba172fff71f3b50f3bdb
+Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
+# Source5-md5:	c67bde6af35417e665ade4696d8adb16
+Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
+# Source6-md5:	24ae4642eeb0a3c08448d4aa878a5163
 Patch0:		nostrip.patch
+Patch1:		gerbview.patch
 URL:		http://www.kicad-pcb.org/
 BuildRequires:	GLM >= 0.9.9.4
 BuildRequires:	OCE-devel
@@ -236,6 +237,7 @@ Documentation and tutorials for Kicad in Chinese.
 
 %prep
 %setup -q -a 1 -a 2 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
+%patch1 -p1
 %patch0 -p1
 
 %build
@@ -343,7 +345,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/idfcyl
 %attr(755,root,root) %{_bindir}/idfrect
 %attr(755,root,root) %{_bindir}/kicad
-%attr(755,root,root) %{_bindir}/kicad-ogltest
 %attr(755,root,root) %{_bindir}/kicad2step
 %attr(755,root,root) %{_bindir}/pcb_calculator
 %attr(755,root,root) %{_bindir}/_pcb_calculator.kiface
