@@ -7,27 +7,26 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.1.8
+Version:	5.1.9
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c573140e521e29441d71f1a39b79752f
+# Source0-md5:	b2c2f141b1a6342977b1192702b8d26d
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	32fcae80e827453f6a71bba837fdfd0f
+# Source1-md5:	a33f909d55443a0fa313544f8a5d91e8
 Source2:	https://gitlab.com/kicad/code/kicad-i18n/-/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	792388e3a74410786085314d4069d408
+# Source2-md5:	4fceb1f3080b7db7d66d40d1a61551df
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	35065c2ccd6f08a38a5557caf3ce26e2
+# Source3-md5:	62537b0b9d3492c01aa59ec09d599f58
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	7e6b08b971adba172fff71f3b50f3bdb
+# Source4-md5:	ce648b6deb4cea3e2003e43bb07c1477
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	c67bde6af35417e665ade4696d8adb16
+# Source5-md5:	ef42e74c7c92303d8853b830a196df3b
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	24ae4642eeb0a3c08448d4aa878a5163
+# Source6-md5:	8fa78fabd2d121712875446e0bd05af4
 Patch0:		nostrip.patch
-Patch1:		gerbview.patch
 URL:		http://www.kicad-pcb.org/
 BuildRequires:	GLM >= 0.9.9.4
 BuildRequires:	OCE-devel
@@ -237,7 +236,6 @@ Documentation and tutorials for Kicad in Chinese.
 
 %prep
 %setup -q -a 1 -a 2 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
-%patch1 -p1
 %patch0 -p1
 
 %build
