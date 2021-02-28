@@ -79,9 +79,7 @@ programów:
 %package library
 Summary:	Symbols, footprints and templates for kicad
 Summary(pl.UTF-8):	Symbole, obudowy i wzorce dla kicad
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 Requires:	kicad >= 1:5.0.0
 
 %description library
@@ -93,9 +91,7 @@ Symbole, obudowy i wzorce dla kicad.
 %package packages3D
 Summary:	Packages3D for kicad
 Summary(pl.UTF-8):	Trójwymiarowe modele obudów dla kicad
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 Requires:	kicad >= 1:5.0.0
 
 %description packages3D
@@ -109,9 +105,7 @@ Summary:	Documentation for kicad
 Summary(fr.UTF-8):	Documentations pour kicad en anglais
 License:	GPL v2+
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc
 Documentation and tutorials for kicad in English
@@ -120,9 +114,7 @@ Documentation and tutorials for kicad in English
 Summary:	Documentation for Kicad in Catalan
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-ca
 Documentation and tutorials for Kicad in Catalan.
@@ -132,9 +124,7 @@ Summary:	Documentation for Kicad in German
 Summary(fr.UTF-8):	Documentations pour kicad en allemand
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-de
 Documentation and tutorials for Kicad in German.
@@ -144,9 +134,7 @@ Summary:	Documentation for Kicad in Spanish
 Summary(fr.UTF-8):	Documentations pour kicad en espagnol
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-es
 Documentation and tutorials for Kicad in Spanish.
@@ -156,9 +144,7 @@ Summary:	Documentation for Kicad in French
 Summary(fr.UTF-8):	Documentations pour kicad en français
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-fr
 Documentation and tutorials for Kicad in French.
@@ -167,9 +153,7 @@ Documentation and tutorials for Kicad in French.
 Summary:	Documentation for Kicad in Indonesian
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-id
 Documentation and tutorials for Kicad in Indonesian.
@@ -179,9 +163,7 @@ Summary:	Documentation for Kicad in Italian
 Summary(fr.UTF-8):	Documentations pour kicad en italien
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-it
 Documentation and tutorials for Kicad in Italian.
@@ -191,9 +173,7 @@ Summary:	Documentation for Kicad in Japanese
 Summary(fr.UTF-8):	Documentations pour kicad en japonais
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-ja
 Documentation and tutorials for Kicad in Japanese.
@@ -203,9 +183,7 @@ Summary:	Documentation for Kicad in Polish
 Summary(fr.UTF-8):	Documentations pour kicad en polonais
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-pl
 Documentation and tutorials for Kicad in Polish.
@@ -215,9 +193,7 @@ Summary:	Documentation for Kicad in Russian
 Summary(fr.UTF-8):	Documentations pour kicad en russe
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-ru
 Documentation and tutorials for Kicad in Russian.
@@ -227,9 +203,7 @@ Summary:	Documentation for Kicad in Chinese
 Summary(fr.UTF-8):	Documentations pour kicad en chinois
 Group:		Documentation
 Requires:	%{name}-doc = %{epoch}:%{version}-%{release}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description doc-zh
 Documentation and tutorials for Kicad in Chinese.
