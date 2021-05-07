@@ -3,29 +3,30 @@
 #
 # Conditional build:
 %bcond_without	packages3D	#do not build packages3D
+%bcond_without	tests		# unit tests
 
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.1.9
+Version:	5.1.10
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	b2c2f141b1a6342977b1192702b8d26d
+# Source0-md5:	1a3f3060c5eb76337efc141ca1204724
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	a33f909d55443a0fa313544f8a5d91e8
+# Source1-md5:	a2a643592c2ccbe315bc277644da201b
 Source2:	https://gitlab.com/kicad/code/kicad-i18n/-/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	4fceb1f3080b7db7d66d40d1a61551df
+# Source2-md5:	5d6ad1c6a46d50dd3d19338f76a3c027
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	62537b0b9d3492c01aa59ec09d599f58
+# Source3-md5:	a6a382b1d83241bc4cd1a8cb54003bee
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	ce648b6deb4cea3e2003e43bb07c1477
+# Source4-md5:	891030103aaa7a11b575cd85cd618e22
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	ef42e74c7c92303d8853b830a196df3b
+# Source5-md5:	26afa2d5d1c8fe3c0ffd1d5e9242a916
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	8fa78fabd2d121712875446e0bd05af4
+# Source6-md5:	7618770f4eb6401b1eaff00641b61115
 Patch0:		nostrip.patch
 URL:		http://www.kicad-pcb.org/
 BuildRequires:	GLM >= 0.9.9.4
@@ -85,7 +86,7 @@ Requires:	kicad >= 1:5.0.0
 %description library
 Symbols, footprints and templates for kicad.
 
-%description -l pl.UTF-8
+%description library -l pl.UTF-8
 Symbole, obudowy i wzorce dla kicad.
 
 %package packages3D
@@ -97,7 +98,7 @@ Requires:	kicad >= 1:5.0.0
 %description packages3D
 Packages3D for kicad
 
-%description -l pl.UTF-8
+%description packages3D -l pl.UTF-8
 Trójwymiarowe modele obudów dla kicad.
 
 %package doc
@@ -249,12 +250,18 @@ cd ../..
 mkdir build
 cd build
 %cmake .. \
-	-DKICAD_SKIP_BOOST=ON \
 	-DKICAD_BUILD_VERSION="%{version}-%{release}" \
 	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk2-unicode-config \
-	-DKICAD_SCRIPTING=ON -DKICAD_SCRIPTING_MODULES=ON -DKICAD_SCRIPTING_WXPYTHON=ON
+	-DKICAD_SCRIPTING=ON \
+	-DKICAD_SCRIPTING_MODULES=ON \
+	-DKICAD_SCRIPTING_WXPYTHON=ON \
+	%{cmake_on_off tests KICAD_BUILD_QA_TESTS}
 
 %{__make} VERBOSE=1
+
+%if %{with tests}
+%{__make} test ARGS=--output-on-failure
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
