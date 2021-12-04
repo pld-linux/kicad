@@ -8,27 +8,27 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.1.10
+Version:	5.1.12
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	1a3f3060c5eb76337efc141ca1204724
+# Source0-md5:	7281e328f850c034700b5917536e5e3d
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	a2a643592c2ccbe315bc277644da201b
+# Source1-md5:	8f186d94fa21d6d108caecc70977ade3
 Source2:	https://gitlab.com/kicad/code/kicad-i18n/-/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	5d6ad1c6a46d50dd3d19338f76a3c027
+# Source2-md5:	0f013b70c8e8d434bb9ecdfba18fcc03
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	a6a382b1d83241bc4cd1a8cb54003bee
+# Source3-md5:	01b04ca1d484fed64d83319cdf32f458
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	891030103aaa7a11b575cd85cd618e22
+# Source4-md5:	683f90741c1cd7d1656bcf2e58f57bc8
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	26afa2d5d1c8fe3c0ffd1d5e9242a916
+# Source5-md5:	d1ae14a71c7b065aad6690268038159d
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	7618770f4eb6401b1eaff00641b61115
+# Source6-md5:	3ec0d8c0b63f83a3edc847bb55103bd7
 Patch0:		nostrip.patch
-URL:		http://www.kicad-pcb.org/
+URL:		http://www.kicad.org/
 BuildRequires:	GLM >= 0.9.9.4
 BuildRequires:	OCE-devel
 BuildRequires:	appstream-glib
@@ -252,6 +252,7 @@ cd build
 %cmake .. \
 	-DKICAD_BUILD_VERSION="%{version}-%{release}" \
 	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk2-unicode-config \
+	-DOCC_INCLUDE_DIR=/usr/include/oce \
 	-DKICAD_SCRIPTING=ON \
 	-DKICAD_SCRIPTING_MODULES=ON \
 	-DKICAD_SCRIPTING_WXPYTHON=ON \
