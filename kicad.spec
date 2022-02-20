@@ -213,6 +213,10 @@ Documentation and tutorials for Kicad in Chinese.
 %setup -q -a 1 -a 2 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
 %patch0 -p1
 
+%ifarch x32
+%{__sed} -i -e '/test_coroutine.cpp/d' qa/common/CMakeLists.txt
+%endif
+
 %build
 
 build_library() {
