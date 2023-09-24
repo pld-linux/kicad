@@ -31,12 +31,14 @@ BuildRequires:	OpenCASCADE-devel >= 7.3.0
 BuildRequires:	appstream-glib
 BuildRequires:	asciidoc
 BuildRequires:	boost-devel
+BuildRequires:	cairo-devel >= 1.12
 BuildRequires:	cmake >= 2.6.4
 BuildRequires:	curl-devel
 BuildRequires:	dblatex
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
 BuildRequires:	glew-devel
+BuildRequires:	gtk+3-devel
 BuildRequires:	ngspice-devel
 BuildRequires:	openssl-devel
 BuildRequires:	perl-Unicode-LineBreak
@@ -46,8 +48,8 @@ BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
-BuildRequires:	wxGTK2-unicode-devel >= 3.0.0
-BuildRequires:	wxGTK2-unicode-gl-devel >= 3.0.0
+BuildRequires:	wxGTK3-unicode-devel >= 3.2.2
+BuildRequires:	wxGTK3-unicode-gl-devel >= 3.2.2
 BuildRequires:	wxWidgets-devel >= 3.0.0
 BuildRequires:	zlib-devel
 Obsoletes:	kicad-doc-hu < 1:4.0.6-1
@@ -198,10 +200,6 @@ Documentation and tutorials for Kicad in Chinese.
 
 %prep
 %setup -q -a 1 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
-
-%ifarch x32
-%{__sed} -i -e '/test_coroutine.cpp/d' qa/common/CMakeLists.txt
-%endif
 
 %build
 
