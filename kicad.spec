@@ -201,6 +201,10 @@ Documentation and tutorials for Kicad in Chinese.
 %prep
 %setup -q -a 1 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
 
+%ifarch x32
+%{__sed} -i -e '/test_coroutine.cpp/d' qa/unittests/common/CMakeLists.txt
+%endif
+
 %build
 
 build_library() {
@@ -326,8 +330,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/demos
 %{_datadir}/%{name}/footprints
-%dir %{_datadir}/%{name}/modules
-%dir %{_datadir}/%{name}/modules/packages3d
 %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/resources
 %{_datadir}/%{name}/schemas
@@ -353,7 +355,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with packages3D}
 %files packages3D
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/modules/packages3d/*
+%{_datadir}/%{name}/3dmodels
 %endif
 
 %files doc
