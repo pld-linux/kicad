@@ -2,35 +2,32 @@
 # - fix mimelnk installation
 #
 # Conditional build:
-%bcond_without	packages3D	#do not build packages3D
+%bcond_without	packages3D	# do not build packages3D
 %bcond_without	tests		# unit tests
 
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	5.1.12
+Version:	7.0.7
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	7281e328f850c034700b5917536e5e3d
-Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
-# Source1-md5:	8f186d94fa21d6d108caecc70977ade3
-Source2:	https://gitlab.com/kicad/code/kicad-i18n/-/archive/%{version}/%{name}-i18n-%{version}.tar.gz
-# Source2-md5:	0f013b70c8e8d434bb9ecdfba18fcc03
+Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	24a74335b414fd326caa057f659611cd
+Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.bz2
+# Source1-md5:	46663e145076127743c21a9503c74cae
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	01b04ca1d484fed64d83319cdf32f458
+# Source3-md5:	7cdf8677c33d182fcceca4a368dfae84
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	683f90741c1cd7d1656bcf2e58f57bc8
+# Source4-md5:	6892e24da695bdf82d97c4a46c2382a5
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	d1ae14a71c7b065aad6690268038159d
+# Source5-md5:	f2bd1e8cd3c2c067b629a5b516b456ae
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	3ec0d8c0b63f83a3edc847bb55103bd7
-Patch0:		nostrip.patch
+# Source6-md5:	1c597abf18b943172988277ebe1f1203
 URL:		http://www.kicad.org/
 BuildRequires:	GLM >= 0.9.9.4
-BuildRequires:	OCE-devel
+BuildRequires:	OpenCASCADE-devel >= 7.3.0
 BuildRequires:	appstream-glib
 BuildRequires:	asciidoc
 BuildRequires:	boost-devel
@@ -44,8 +41,9 @@ BuildRequires:	ngspice-devel
 BuildRequires:	openssl-devel
 BuildRequires:	perl-Unicode-LineBreak
 BuildRequires:	po4a >= 0.51
-BuildRequires:	python-wxPython-devel
+BuildRequires:	python3-wxPython-devel
 BuildRequires:	rpmbuild(macros) >= 1.600
+BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
 BuildRequires:	which
 BuildRequires:	wxGTK2-unicode-devel >= 3.0.0
@@ -56,6 +54,7 @@ Obsoletes:	kicad-doc-hu < 1:4.0.6-1
 Obsoletes:	kicad-doc-nl < 1:5.1.0-1
 Obsoletes:	kicad-doc-pt < 1:4.0.6-1
 Obsoletes:	kicad-doc-zh_CN < 1:4.0.6-1
+Obsoletes:	kicad-library < 1:7.0.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -77,23 +76,11 @@ programów:
 - pcbnew - program do projektowania płytek drukowanych.
 - gerbview - przeglądarka plików Gerber (dokumentów dla fotoplotera).
 
-%package library
-Summary:	Symbols, footprints and templates for kicad
-Summary(pl.UTF-8):	Symbole, obudowy i wzorce dla kicad
-BuildArch:	noarch
-Requires:	kicad >= 1:5.0.0
-
-%description library
-Symbols, footprints and templates for kicad.
-
-%description library -l pl.UTF-8
-Symbole, obudowy i wzorce dla kicad.
-
 %package packages3D
 Summary:	Packages3D for kicad
 Summary(pl.UTF-8):	Trójwymiarowe modele obudów dla kicad
-BuildArch:	noarch
 Requires:	kicad >= 1:5.0.0
+BuildArch:	noarch
 
 %description packages3D
 Packages3D for kicad
@@ -210,8 +197,7 @@ BuildArch:	noarch
 Documentation and tutorials for Kicad in Chinese.
 
 %prep
-%setup -q -a 1 -a 2 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
-%patch0 -p1
+%setup -q -a 1 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
 
 %ifarch x32
 %{__sed} -i -e '/test_coroutine.cpp/d' qa/common/CMakeLists.txt
@@ -220,7 +206,7 @@ Documentation and tutorials for Kicad in Chinese.
 %build
 
 build_library() {
-  mkdir "$1/build"
+  mkdir -p "$1/build"
   cd "$1/build"
   %cmake ..
   %{__make} VERBOSE=1
@@ -235,31 +221,28 @@ build_library %{name}-packages3D-%{version}
 %endif
 
 # Documentation
-mkdir %{name}-doc-%{version}/build
+mkdir -p %{name}-doc-%{version}/build
 cd %{name}-doc-%{version}/build
 %cmake .. \
 	-DBUILD_FORMATS=html
 %{__make} VERBOSE=1
 cd ../..
 
-# Translations
-mkdir %{name}-i18n-%{version}/build
-cd %{name}-i18n-%{version}/build
-%cmake .. \
-	-DKICAD_I18N_UNIX_STRICT_PATH=ON
-%{__make} VERBOSE=1
-cd ../..
-
 # Core components
-mkdir build
+mkdir -p build
 cd build
 %cmake .. \
 	-DKICAD_BUILD_VERSION="%{version}-%{release}" \
-	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk2-unicode-config \
-	-DOCC_INCLUDE_DIR=/usr/include/oce \
+	-DKICAD_BUILD_I18N=ON \
+	-DKICAD_I18N_UNIX_STRICT_PATH=ON \
+	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk3-unicode-config \
+	-DKICAD_USE_OCC=ON \
+	-DKICAD_USE_EGL=ON \
 	-DKICAD_SCRIPTING=ON \
+	-DKICAD_SCRIPTING_PYTHON3=ON \
 	-DKICAD_SCRIPTING_MODULES=ON \
-	-DKICAD_SCRIPTING_WXPYTHON=ON \
+	-DKICAD_SCRIPTING_WXPYTHON=OFF \
+	-DKICAD_SCRIPTING_WXPYTHON_PHOENIX=ON \
 	%{cmake_on_off tests KICAD_BUILD_QA_TESTS}
 
 %{__make} VERBOSE=1
@@ -294,10 +277,6 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/modules/packages3d
 %{__make} -C %{name}-doc-%{version}/build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# Translations
-%{__make} -C %{name}-i18n-%{version}/build install \
-	DESTDIR=$RPM_BUILD_ROOT
-
 %find_lang %{name}
 
 %post
@@ -317,7 +296,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS.txt Documentation
+%doc AUTHORS.txt README.md
 %attr(755,root,root) %{_bindir}/bitmap2component
 %attr(755,root,root) %{_bindir}/_cvpcb.kiface
 %attr(755,root,root) %{_bindir}/dxf2idf
@@ -329,7 +308,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/idfcyl
 %attr(755,root,root) %{_bindir}/idfrect
 %attr(755,root,root) %{_bindir}/kicad
-%attr(755,root,root) %{_bindir}/kicad2step
+%attr(755,root,root) %{_bindir}/kicad-cli
+%attr(755,root,root) %{_bindir}/_kipython.kiface
 %attr(755,root,root) %{_bindir}/pcb_calculator
 %attr(755,root,root) %{_bindir}/_pcb_calculator.kiface
 %attr(755,root,root) %{_bindir}/pcbnew
@@ -343,37 +323,34 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}/plugins/3d
 %attr(755,root,root) %{_libdir}/%{name}/plugins/3d/*.so
 #python - to subpackage?
-%attr(755,root,root) %{_libdir}/python2.7/site-packages/_pcbnew.so
-%{_libdir}/python2.7/site-packages/pcbnew.py
+%attr(755,root,root) %{py3_sitedir}/_pcbnew.so
+%{py3_sitedir}/pcbnew.py
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/demos
-%{_datadir}/%{name}/plugins
-%{_datadir}/%{name}/scripting
-%dir %{_datadir}/%{name}/library
+%{_datadir}/%{name}/footprints
 %dir %{_datadir}/%{name}/modules
 %dir %{_datadir}/%{name}/modules/packages3d
-%dir %{_datadir}/%{name}/template
+%{_datadir}/%{name}/plugins
+%{_datadir}/%{name}/resources
+%{_datadir}/%{name}/schemas
+%{_datadir}/%{name}/scripting
+%{_datadir}/%{name}/symbols
+%{_datadir}/%{name}/template
 %{_iconsdir}/hicolor/*x*/*/*.png
 %{_iconsdir}/hicolor/scalable/*/*.svg
 %{_datadir}/mime/packages/kicad-*.xml
-%{_datadir}/appdata/kicad.appdata.xml
-%{_desktopdir}/eeschema.desktop
-%{_desktopdir}/%{name}.desktop
-%{_desktopdir}/bitmap2component.desktop
-%{_desktopdir}/gerbview.desktop
-%{_desktopdir}/pcbcalculator.desktop
-%{_desktopdir}/pcbnew.desktop
+%{_metainfodir}/org.kicad.kicad.metainfo.xml
+%{_desktopdir}/org.kicad.eeschema.desktop
+%{_desktopdir}/org.kicad.kicad.desktop
+%{_desktopdir}/org.kicad.bitmap2component.desktop
+%{_desktopdir}/org.kicad.gerbview.desktop
+%{_desktopdir}/org.kicad.pcbcalculator.desktop
+%{_desktopdir}/org.kicad.pcbnew.desktop
 #%{_datadir}/mimelnk/application/x-kicad-pcb.desktop
 #%{_datadir}/mimelnk/application/x-kicad-project.desktop
 #%{_datadir}/mimelnk/application/x-kicad-schematic.desktop
 
 %dir %{_docdir}/%{name}
-
-%files library
-%defattr(644,root,root,755)
-%{_datadir}/%{name}/library/*
-%{_datadir}/%{name}/modules/*.pretty
-%{_datadir}/%{name}/template/*
 
 %if %{with packages3D}
 %files packages3D
@@ -386,7 +363,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_docdir}/%{name}
 %dir %{_docdir}/%{name}/help
 %{_docdir}/%{name}/help/en
-%{_docdir}/%{name}/scripts
 
 %files doc-ca
 %defattr(644,root,root,755)
