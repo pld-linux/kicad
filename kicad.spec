@@ -5,6 +5,10 @@
 %bcond_without	packages3D	# do not build packages3D
 %bcond_without	tests		# unit tests
 
+%ifarch %{ix86}
+%undefine	with_tests
+%endif
+
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
@@ -240,6 +244,7 @@ cd build
 	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk3-unicode-config \
 	-DKICAD_USE_OCC=ON \
 	-DKICAD_USE_EGL=ON \
+	-DKICAD_USE_BUNDLED_GLEW=OFF \
 	-DKICAD_SCRIPTING=ON \
 	-DKICAD_SCRIPTING_PYTHON3=ON \
 	-DKICAD_SCRIPTING_MODULES=ON \
