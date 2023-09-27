@@ -13,7 +13,7 @@ Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
 Version:	7.0.7
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
@@ -283,6 +283,9 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/modules/packages3d
 # Documentation
 %{__make} -C %{name}-doc-%{version}/build install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{no,nb}
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/pt_{br,BR}
 
 %find_lang %{name}
 
