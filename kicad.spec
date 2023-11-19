@@ -12,24 +12,25 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	7.0.7
-Release:	2
+Version:	7.0.9
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	24a74335b414fd326caa057f659611cd
+# Source0-md5:	d44b75cd17bc1faa5aa3f95a15314407
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.bz2
-# Source1-md5:	46663e145076127743c21a9503c74cae
+# Source1-md5:	322b171420aa99ad810fe1f1f9a84c25
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	7cdf8677c33d182fcceca4a368dfae84
+# Source3-md5:	79c2cadc1e6efcf5de4f638ab9296a27
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	6892e24da695bdf82d97c4a46c2382a5
+# Source4-md5:	2574bbd4c881ab7e56d328aaf4e1e0b9
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	f2bd1e8cd3c2c067b629a5b516b456ae
+# Source5-md5:	c63c813f6a4a1dd22ec889958c545c20
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	1c597abf18b943172988277ebe1f1203
+# Source6-md5:	2adb30c2b17ff13a82083557ed40033b
 URL:		http://www.kicad.org/
+BuildRequires:	EGL-devel
 BuildRequires:	GLM >= 0.9.9.4
 BuildRequires:	OpenCASCADE-devel >= 7.3.0
 BuildRequires:	appstream-glib
@@ -41,7 +42,6 @@ BuildRequires:	curl-devel
 BuildRequires:	dblatex
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
-BuildRequires:	glew-devel
 BuildRequires:	gtk+3-devel
 BuildRequires:	ngspice-devel
 BuildRequires:	openssl-devel
@@ -237,6 +237,8 @@ cd ../..
 # Core components
 mkdir -p build
 cd build
+# Use bundled GLEW because GLEW compiled with EGL support is required
+# See thirdparty/glew/README.md
 %cmake .. \
 	-DKICAD_BUILD_VERSION="%{version}-%{release}" \
 	-DKICAD_BUILD_I18N=ON \
@@ -244,7 +246,7 @@ cd build
 	-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-gtk3-unicode-config \
 	-DKICAD_USE_OCC=ON \
 	-DKICAD_USE_EGL=ON \
-	-DKICAD_USE_BUNDLED_GLEW=OFF \
+	-DKICAD_USE_BUNDLED_GLEW=ON \
 	-DKICAD_SCRIPTING=ON \
 	-DKICAD_SCRIPTING_PYTHON3=ON \
 	-DKICAD_SCRIPTING_MODULES=ON \
@@ -276,8 +278,6 @@ install_library %{name}-footprints-%{version}
 install_library %{name}-templates-%{version}
 %if %{with packages3D}
 install_library %{name}-packages3D-%{version}
-%else
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/modules/packages3d
 %endif
 
 # Documentation
@@ -285,7 +285,6 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/modules/packages3d
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/{no,nb}
-%{__mv} $RPM_BUILD_ROOT%{_localedir}/pt_{br,BR}
 
 %find_lang %{name}
 
