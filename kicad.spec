@@ -12,53 +12,66 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	8.0.0
+Version:	8.0.2
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	ed08d6778639bf956e7c53e53aa3442f
+# Source0-md5:	957ba90492d8bf60f4ff55b3910f1cbd
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.bz2
-# Source1-md5:	5f17f61092b57b35650bf1a9078de8e7
+# Source1-md5:	5c1b5dc997be84b08d59d78a5a9fcd3e
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	d314c9250731acd6c4fe0931a7ecff82
+# Source3-md5:	060c52586965f15b867ee0683aa642ae
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	06717879d96ceffa251103ca89788a2d
+# Source4-md5:	c9537b5ccaa9581ff32d157837a13c38
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	c5841a019136ab0b9389ab7e51bc92f4
+# Source5-md5:	d6e3242a55c5c28699b50cd4f85e191c
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	e944b3995b851e8eec6b4fda147531f4
+# Source6-md5:	20932897d55d49386a1e2431a2aeef5f
 URL:		http://www.kicad.org/
 BuildRequires:	EGL-devel
 BuildRequires:	GLM >= 0.9.9.4
 BuildRequires:	OpenCASCADE-devel >= 7.3.0
+BuildRequires:	OpenGL-devel
 BuildRequires:	appstream-glib
 BuildRequires:	asciidoc
-BuildRequires:	boost-devel
+BuildRequires:	boost-devel >= 1.71
 BuildRequires:	cairo-devel >= 1.12
 BuildRequires:	cmake >= 2.6.4
 BuildRequires:	curl-devel
 BuildRequires:	dblatex
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
-BuildRequires:	gtk+3-devel
+BuildRequires:	fontconfig-devel
+BuildRequires:	freetype-devel >= 2
+BuildRequires:	gettext-tools
+BuildRequires:	gtk+3-devel >= 3.0
+BuildRequires:	harfbuzz-devel
 BuildRequires:	libgit2-devel
+BuildRequires:	libsecret-devel
 BuildRequires:	ngspice-devel
 BuildRequires:	openssl-devel
 BuildRequires:	perl-Unicode-LineBreak
+BuildRequires:	pixman-devel >= 0.30
+BuildRequires:	pkgconfig
 BuildRequires:	po4a >= 0.51
 %if %{with tests}
 BuildRequires:	python3-cairosvg
 %endif
+BuildRequires:	python3-devel >= 1:3.6
+BuildRequires:	python3-pybind11
 BuildRequires:	python3-wxPython-devel
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
+BuildRequires:	swig >= 4.0
+BuildRequires:	unixODBC-devel
+BuildRequires:	wayland-devel
 BuildRequires:	which
 BuildRequires:	wxGTK3-unicode-devel >= 3.2.2
 BuildRequires:	wxGTK3-unicode-gl-devel >= 3.2.2
-BuildRequires:	wxWidgets-devel >= 3.0.0
+BuildRequires:	wxWidgets-devel >= 3.2.0
 BuildRequires:	zlib-devel
 Obsoletes:	kicad-doc-hu < 1:4.0.6-1
 Obsoletes:	kicad-doc-nl < 1:5.1.0-1
