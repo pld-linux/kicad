@@ -31,7 +31,7 @@ Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}
 # Source6-md5:	20932897d55d49386a1e2431a2aeef5f
 URL:		http://www.kicad.org/
 BuildRequires:	EGL-devel
-BuildRequires:	GLM >= 0.9.9.4
+BuildRequires:	GLM-devel >= 0.9.9.4
 BuildRequires:	OpenCASCADE-devel >= 7.3.0
 BuildRequires:	OpenGL-devel
 BuildRequires:	appstream-glib
