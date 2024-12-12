@@ -66,7 +66,7 @@ BuildRequires:	python3-pytest
 BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	python3-pybind11
 BuildRequires:	python3-wxPython-devel
-BuildRequires:	rpmbuild(macros) >= 1.600
+BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
 BuildRequires:	swig >= 4.0
@@ -235,11 +235,11 @@ Documentation and tutorials for Kicad in Chinese.
 %build
 
 build_library() {
-  mkdir -p "$1/build"
-  cd "$1/build"
-  %cmake ..
-  %{__make} VERBOSE=1
-  cd ../..
+	mkdir -p "$1/build"
+	cd "$1/build"
+	%cmake ..
+	%{__make} VERBOSE=1
+	cd ../..
 }
 # Symbols libraries
 build_library %{name}-symbols-%{version}
@@ -288,8 +288,8 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 rm -rf $RPM_BUILD_ROOT
 
 install_library() {
-  %{__make} -C $1/build install \
-	DESTDIR=$RPM_BUILD_ROOT
+	%{__make} -C $1/build install \
+		DESTDIR=$RPM_BUILD_ROOT
 }
 
 # KiCAD itself
