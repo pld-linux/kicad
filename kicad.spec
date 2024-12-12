@@ -29,6 +29,7 @@ Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version
 # Source5-md5:	d6e3242a55c5c28699b50cd4f85e191c
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
 # Source6-md5:	20932897d55d49386a1e2431a2aeef5f
+Patch0:		libgit2-1.8.patch
 URL:		http://www.kicad.org/
 BuildRequires:	EGL-devel
 BuildRequires:	GLM-devel >= 0.9.9.4
@@ -224,6 +225,7 @@ Documentation and tutorials for Kicad in Chinese.
 
 %prep
 %setup -q -a 1 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
+%patch -P 0 -p1
 
 %ifarch x32
 # fails on x32
