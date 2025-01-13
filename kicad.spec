@@ -12,24 +12,23 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	8.0.2
-Release:	2
+Version:	8.0.8
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	957ba90492d8bf60f4ff55b3910f1cbd
+# Source0-md5:	75316133928e04a143895b44a7dad61b
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.bz2
-# Source1-md5:	5c1b5dc997be84b08d59d78a5a9fcd3e
+# Source1-md5:	e2b8f413eb2b6c3e09273815e6d776bf
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	060c52586965f15b867ee0683aa642ae
+# Source3-md5:	c58ad0117c30d049db5e917e824cd64d
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	c9537b5ccaa9581ff32d157837a13c38
+# Source4-md5:	a47664747f47b837f5fd6b3710b9c042
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	d6e3242a55c5c28699b50cd4f85e191c
+# Source5-md5:	b1a1ea6cbe8aded28ce4b99bf5bb2ad2
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	20932897d55d49386a1e2431a2aeef5f
-Patch0:		libgit2-1.8.patch
+# Source6-md5:	001aa2d65fb4db9465d3e3fcfed87dd1
 URL:		http://www.kicad.org/
 BuildRequires:	EGL-devel
 BuildRequires:	GLM-devel >= 0.9.9.4
@@ -225,7 +224,6 @@ Documentation and tutorials for Kicad in Chinese.
 
 %prep
 %setup -q -a 1 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
-%patch -P 0 -p1
 
 %ifarch x32
 # fails on x32
