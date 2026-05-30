@@ -12,23 +12,23 @@
 Summary:	KiCad - is a GPL'd suite of programs for EDA
 Summary(pl.UTF-8):	KiCad - zestaw programów na licencji GPL zaliczany do kategorii EDA
 Name:		kicad
-Version:	8.0.8
-Release:	4
+Version:	10.0.3
+Release:	0.1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	75316133928e04a143895b44a7dad61b
+# Source0-md5:	b0bcf499b90122a8586a08504b0ba2f2
 Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.bz2
-# Source1-md5:	e2b8f413eb2b6c3e09273815e6d776bf
+# Source1-md5:	37db0feb8e89dc3d59aceb0c05203ca3
 Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
-# Source3-md5:	c58ad0117c30d049db5e917e824cd64d
+# Source3-md5:	085ed7306d0125325e2781d4de7c0662
 Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
-# Source4-md5:	a47664747f47b837f5fd6b3710b9c042
+# Source4-md5:	46c0e2438472763f90f2931d08379a70
 Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
-# Source5-md5:	b1a1ea6cbe8aded28ce4b99bf5bb2ad2
+# Source5-md5:	d8860a9894c15e777e5887ac0ec1105c
 Source6:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
-# Source6-md5:	001aa2d65fb4db9465d3e3fcfed87dd1
+# Source6-md5:	1b624a61203a452b01377ff1e6334fb6
 URL:		http://www.kicad.org/
 BuildRequires:	EGL-devel
 BuildRequires:	GLM-devel >= 0.9.9.4
@@ -40,7 +40,6 @@ BuildRequires:	boost-devel >= 1.71
 BuildRequires:	cairo-devel >= 1.12
 BuildRequires:	cmake >= 2.6.4
 BuildRequires:	curl-devel
-BuildRequires:	dblatex
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
 BuildRequires:	fontconfig-devel
@@ -50,14 +49,20 @@ BuildRequires:	gtk+3-devel >= 3.0
 BuildRequires:	harfbuzz-devel
 BuildRequires:	libgit2-devel
 BuildRequires:	libsecret-devel
+BuildRequires:	libspnav-devel
 BuildRequires:	ngspice-devel
+BuildRequires:	nng-devel
 BuildRequires:	openssl-devel
 BuildRequires:	perl-Unicode-LineBreak
 BuildRequires:	pixman-devel >= 0.30
 BuildRequires:	pkgconfig
 BuildRequires:	po4a >= 0.51
+BuildRequires:	poppler-devel
+BuildRequires:	poppler-cpp-devel
+BuildRequires:	protobuf-devel >= 4.25.8
 %if %{with tests}
 BuildRequires:	python3-cairosvg
+BuildRequires:	python3-numpy
 BuildRequires:	python3-pytest
 # TODO
 #BuildRequires:	python3-pytest-image-diff
@@ -69,6 +74,7 @@ BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
 BuildRequires:	swig >= 4.0
+BuildRequires:	swig-python >= 4.0
 BuildRequires:	unixODBC-devel
 BuildRequires:	wayland-devel
 BuildRequires:	which
@@ -82,6 +88,11 @@ Obsoletes:	kicad-doc-pt < 1:4.0.6-1
 Obsoletes:	kicad-doc-zh_CN < 1:4.0.6-1
 Obsoletes:	kicad-library < 1:7.0.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+#workaround of false detection of undefined symbol google::protobuf::internal::ThreadSafeArena::thread_cache_
+#the symbol is defined in libprotobuf.so:
+# 0000000000000000 g    D  .tdata 0000000000000020  Base        google::protobuf::internal::ThreadSafeArena::thread_cache_
+%define		skip_post_check_so	libkiapi.so.10.0.3
 
 %description
 KiCad consists of a project manager and four main programs:
@@ -222,6 +233,33 @@ BuildArch:	noarch
 %description doc-zh
 Documentation and tutorials for Kicad in Chinese.
 
+%package -n bash-completion-kicad
+Summary:	Bash completion for kicad-cli commands
+Summary(pl.UTF-8):	Bashowe uzupełnianie parametrów dla poleceń kicad-cli
+Group:		Applications/Shells
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	bash-completion >= 2.0
+BuildArch:	noarch
+
+%description -n bash-completion-kicad
+Bash completion for kicad-cli commands.
+
+%description -n bash-completion-kicad -l pl.UTF-8
+Bashowe uzupełnianie parametrów dla poleceń kicad-cli.
+
+%package -n zsh-completion-kicad
+Summary:	zsh completion for kicad-cli commands
+Summary(pl.UTF-8):	Uzupełnianie parametrów w zsh dla poleceń kicad-cli
+Group:		Applications/Shells
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+BuildArch:	noarch
+
+%description -n zsh-completion-kicad
+zsh completion for kicad-cli commands.
+
+%description -n zsh-completion-kicad -l pl.UTF-8
+Uzupełnianie parametrów w zsh dla poleceń kicad-cli.
+
 %prep
 %setup -q -a 1 -a 3 -a 4 %{?with_packages3D:-a 5} -a 6
 
@@ -279,6 +317,7 @@ cd build
 
 %if %{with tests}
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+KICAD_RUN_FROM_BUILD_DIR=1 \
 %{__make} test ARGS=--output-on-failure
 %endif
 
@@ -305,8 +344,6 @@ install_library %{name}-packages3D-%{version}
 # Documentation
 %{__make} -C %{name}-doc-%{version}/build install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-%{__mv} $RPM_BUILD_ROOT%{_localedir}/{no,nb}
 
 %find_lang %{name}
 
@@ -347,6 +384,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/_pcbnew.kiface
 %attr(755,root,root) %{_bindir}/pl_editor
 %attr(755,root,root) %{_bindir}/_pl_editor.kiface
+%attr(755,root,root) %{_libdir}/libkiapi.so.*.*.*
+%ghost %{_libdir}/libkiapi.so
 %attr(755,root,root) %{_libdir}/libkicad_3dsg.so.*.*.*
 %ghost %{_libdir}/libkicad_3dsg.so
 %attr(755,root,root) %{_libdir}/libkicommon.so.*.*.*
@@ -436,3 +475,11 @@ rm -rf $RPM_BUILD_ROOT
 %files doc-zh
 %defattr(644,root,root,755)
 %lang(zh) %{_docdir}/%{name}/help/zh
+
+%files -n bash-completion-kicad
+%defattr(644,root,root,755)
+%{bash_compdir}/kicad-cli
+
+%files -n zsh-completion-kicad
+%defattr(644,root,root,755)
+%{zsh_compdir}/_kicad-cli
